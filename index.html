@@ -349,6 +349,20 @@
       background-color: #adb5bd !important;
     }
 
+    /* ====== Deel 3 — drempelkaarten (3.2.A) ====== */
+    .d3-kaart-kop { background:transparent; }
+    .d3-kaart-kop:hover { background:#f6fbfb; }
+    .d3-kaart.d3-kaart-open { box-shadow:0 0 0 2px var(--groeipunt) !important; }
+    .d3-chk {
+      flex:none; width:22px; height:22px; margin-top:2px;
+      border:1.5px solid #adb5bd; border-radius:6px;
+      display:flex; align-items:center; justify-content:center;
+      color:#fff; font-size:1rem; line-height:1;
+      transition:background-color .15s, border-color .15s;
+    }
+    .d3-chk.aan { background:var(--groeipunt); border-color:var(--groeipunt); }
+    .d3-car { color:#adb5bd; font-size:1.1rem; margin-top:2px; }
+
     /* ====== Uitbreidingsoefening ====== */
     .uitbreiding-banner {
       background: linear-gradient(135deg, #6f42c1 0%, #9b5de5 100%);
@@ -513,6 +527,22 @@
       background-color: var(--groeipunt);
       border-color: var(--groeipunt);
       color: #fff;
+    }
+
+    /* ====== Smartphone: ruimte vrijhouden onder de Moodle-menubalk ======
+       In de Moodle-app/mobiele browser ligt onderaan een vaste menubalk
+       over de iframe. Daardoor verdwijnen de "Terug/Volgende"-knoppen er
+       deels achter. Extra ruimte onderaan elke pagina maakt dat de knoppen
+       boven de balk uit te scrollen en volledig bruikbaar zijn. De iOS
+       safe-area (home-indicator) wordt mee verrekend. */
+    @media (max-width: 768px) {
+      .page.active {
+        padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+      }
+      /* Mascotte mee omhoog zodat ook die niet achter de balk valt */
+      #mascot-container {
+        bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+      }
     }
   </style>
 </head>
@@ -3695,6 +3725,471 @@
   </div>
 
 
+  <!-- ============================================================ -->
+  <!-- DEEL 3 — INTRO (sectiemenu)                                  -->
+  <!-- ============================================================ -->
+  <div id="page-deel3-intro" class="page">
+    <div class="progress-wrapper">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-1">
+        <span class="fw-bold progress-titel">Deel 3 — Strategieën</span>
+        <button type="button" class="btn btn-link btn-sm p-0 text-muted" style="text-decoration:none;" onclick="openBalkStijlModal()" title="Wijzig de stijl van je voortgangsbalk"><i class="bi bi-palette-fill"></i></button>
+      </div>
+      <div class="progress" style="height: 10px;"><div class="progress-bar" role="progressbar" style="width: 0%;"></div></div>
+    </div>
+  </div>
+
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body p-4 p-md-5">
+              <p class="text-muted mb-1">Hallo <span class="welcome-name fw-bold"></span>,</p>
+              <h1 class="h2 mb-3">Deel 3 — Strategieën</h1>
+              <p class="lead">
+                In Deel 2 leerde je je <strong>drempels</strong> herkennen. In dit deel ga je op zoek naar
+                <strong>helpende strategieën</strong>: concrete manieren om met die drempels om te gaan.
+                Je kiest strategieën die bij jou passen en werkt er één helemaal uit.
+              </p>
+
+              <p class="mt-4 mb-2">Dit deel bestaat uit <strong>3 onderdelen</strong>. Klik op een onderdeel om er meteen naartoe te gaan (of start vanaf het begin).</p>
+              <div class="list-group mb-3">
+                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel3-strategie-theorie')">
+                  <span class="badge rounded-pill me-3" style="background-color:var(--groeipunt);">1</span>
+                  <span class="flex-grow-1"><strong>Wat is een helpende strategie?</strong> <span class="text-muted small">— wat maakt een strategie goed?</span></span>
+                  <i class="bi bi-chevron-right text-muted"></i>
+                </button>
+                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel3-drempels-strategie')">
+                  <span class="badge rounded-pill me-3" style="background-color:var(--groeipunt);">2</span>
+                  <span class="flex-grow-1"><strong>Strategieën per drempel</strong> <span class="text-muted small">— kies strategieën voor jouw drempels</span></span>
+                  <i class="bi bi-chevron-right text-muted"></i>
+                </button>
+                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel3-uitwerken-kiezen')">
+                  <span class="badge rounded-pill me-3" style="background-color:var(--groeipunt);">3</span>
+                  <span class="flex-grow-1"><strong>Werk jouw strategie uit</strong> <span class="text-muted small">— in 5 stappen</span></span>
+                  <i class="bi bi-chevron-right text-muted"></i>
+                </button>
+                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel3-afsluiting')" style="background-color:#f8f9fa;">
+                  <span class="badge rounded-pill me-3 bg-success"><i class="bi bi-file-earmark-pdf"></i></span>
+                  <span class="flex-grow-1"><strong>Afronding</strong> <span class="text-muted small">— PDF van Deel 3 genereren</span></span>
+                  <i class="bi bi-chevron-right text-muted"></i>
+                </button>
+              </div>
+
+              <div class="d-flex justify-content-between mt-4">
+                <button class="btn btn-outline-secondary" onclick="goToPage('page-overzicht')">
+                  <i class="bi bi-grid me-2"></i>Alle delen
+                </button>
+                <button class="btn btn-groeipunt" onclick="goToPage('page-deel3-strategie-theorie')">
+                  Start vanaf het begin <i class="bi bi-arrow-right ms-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- DEEL 3 — 3.1 WAT IS EEN HELPENDE STRATEGIE? (theorie)        -->
+  <!-- ============================================================ -->
+  <div id="page-deel3-strategie-theorie" class="page">
+    <div class="progress-wrapper">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-1">
+        <span class="fw-bold progress-titel">Deel 3 — Strategieën</span>
+        <button type="button" class="btn btn-link btn-sm p-0 text-muted" style="text-decoration:none;" onclick="openBalkStijlModal()" title="Wijzig de stijl van je voortgangsbalk"><i class="bi bi-palette-fill"></i></button>
+      </div>
+      <div class="progress" style="height: 10px;"><div class="progress-bar" role="progressbar" style="width: 0%;"></div></div>
+    </div>
+  </div>
+
+    <div class="container py-4">
+      <div class="row justify-content-center">
+        <div class="col-lg-9">
+          <div class="mb-3"><span class="badge" style="background-color:var(--groeipunt);">3.1</span><h1 class="h4 mt-2 mb-0">Wat is een helpende strategie?</h1></div>
+
+          <div class="card border-0 shadow-sm mb-3">
+            <div class="card-body p-4">
+              <p>Een <strong>helpende strategie</strong> is een bewuste keuze om met een drempel om te gaan. Het is een concrete actie die je stap voor stap dichter bij je doel brengt.</p>
+              <div class="alert border-0 d-flex align-items-start py-2" style="background-color:#e7f5f5;">
+                <i class="bi bi-lightbulb-fill me-2 mt-1" style="color:var(--groeipunt);"></i>
+                <div class="small mb-0">Het woord <strong>strategie</strong> betekent: een manier waaróp je iets aanpakt. Een doordachte manier van handelen om een doel te bereiken. Je kiest dus bewust hoe je te werk gaat in plaats van het op zijn beloop te laten.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm mb-3">
+            <div class="card-body p-4">
+              <h2 class="h6 mb-3">Een goede strategie is …</h2>
+              <div class="table-responsive">
+                <table class="table table-bordered align-middle mb-0">
+                  <thead style="background-color:#e6f5f5;">
+                    <tr><th style="width:22%;">Eigenschap</th><th style="width:33%;">Betekenis</th><th>Voorbeeld</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="fw-semibold">Concreet</td>
+                      <td class="small">Je weet precies wat je gaat doen.</td>
+                      <td class="small"><span class="text-danger">Niet:</span> “Ik ga beter leren.”<br><span class="text-success">Wel:</span> “Ik oefen elke dag 10 minuten rekenen.”</td>
+                    </tr>
+                    <tr>
+                      <td class="fw-semibold">Realistisch</td>
+                      <td class="small">De stap is niet te groot en past bij jouw leven.</td>
+                      <td class="small"><span class="text-danger">Niet:</span> “3 uur per dag.”<br><span class="text-success">Wel:</span> “30 minuten na het werk.”</td>
+                    </tr>
+                    <tr>
+                      <td class="fw-semibold">Gepland in tijd</td>
+                      <td class="small">Je weet wanneer je start.</td>
+                      <td class="small"><span class="text-danger">Niet:</span> “Binnenkort.”<br><span class="text-success">Wel:</span> “Dinsdag om 19u.”</td>
+                    </tr>
+                    <tr>
+                      <td class="fw-semibold">Evalueerbaar</td>
+                      <td class="small">Je kunt achteraf zeggen of het hielp.</td>
+                      <td class="small"><span class="text-danger">Niet:</span> “Ik probeer iets.”<br><span class="text-success">Wel:</span> “Na 2 weken kijk ik of het beter gaat.”</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-outline-secondary" onclick="goToPage('page-deel3-intro')"><i class="bi bi-arrow-left me-2"></i>Terug</button>
+            <button class="btn btn-groeipunt" onclick="goToPage('page-deel3-drempels-strategie')">Naar de oefening <i class="bi bi-arrow-right ms-2"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- DEEL 3 — 3.2.A STRATEGIEËN PER DREMPEL                       -->
+  <!-- ============================================================ -->
+  <div id="page-deel3-drempels-strategie" class="page">
+    <div class="progress-wrapper">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-1">
+        <span class="fw-bold progress-titel">Deel 3 — Strategieën</span>
+        <button type="button" class="btn btn-link btn-sm p-0 text-muted" style="text-decoration:none;" onclick="openBalkStijlModal()" title="Wijzig de stijl van je voortgangsbalk"><i class="bi bi-palette-fill"></i></button>
+      </div>
+      <div class="progress" style="height: 10px;"><div class="progress-bar" role="progressbar" style="width: 0%;"></div></div>
+    </div>
+  </div>
+
+    <div class="container py-4">
+      <div class="row justify-content-center">
+        <div class="col-lg-9">
+          <div class="mb-3"><span class="badge" style="background-color:var(--groeipunt);">Oefening 3.2.A</span><h1 class="h4 mt-2 mb-0">Kies strategieën voor jouw drempels</h1></div>
+
+          <div class="card border-0 shadow-sm mb-3">
+            <div class="card-body p-4">
+              <p class="small mb-2">Hieronder vind je voor veelvoorkomende drempels een korte toelichting en een lijst met strategieën. Het toelichtingsstukje klopt misschien niet helemaal met hoe jij het ervaart — dat hoeft ook niet, het helpt je enkel om te ontdekken of je de drempel herkent.</p>
+              <p class="small mb-2">Klik op een drempel die je <strong>soms</strong> herkent (je hoeft ze niet altijd te ervaren). De drempel klapt dan open. Duid daar de strategie(ën) aan waarvan jij denkt dat ze je kunnen helpen, en beantwoord de drie vragen.</p>
+              <div class="alert border-0 d-flex align-items-start py-2 mb-0" style="background-color:#e7f5f5;">
+                <i class="bi bi-info-circle-fill me-2 mt-1" style="color:var(--groeipunt);"></i>
+                <div class="small mb-0">Duid <strong>minstens 3 drempels</strong> aan en kies bij elk minstens één strategie. Zodra je een strategie kiest, worden de drie vragen bij die drempel verplicht.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mb-2 px-1">
+            <span class="small text-muted">Aangeduid met strategie: <span id="d3-teller" class="fw-bold" style="color:var(--groeipunt);">0</span> / minstens 3</span>
+            <span class="small text-muted"><i class="bi bi-hand-index me-1"></i>klik een drempel om open te klappen</span>
+          </div>
+
+          <div id="d3-drempel-lijst"></div>
+
+          <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-outline-secondary" onclick="goToPage('page-deel3-strategie-theorie')"><i class="bi bi-arrow-left me-2"></i>Terug</button>
+            <button class="btn btn-groeipunt" id="btn-3-2-A-next" disabled title="Duid minstens 3 drempels aan met telkens een strategie" onclick="goToPage('page-deel3-uitwerken-kiezen')">Volgende <i class="bi bi-arrow-right ms-2"></i></button>
+          </div>
+          <div id="d3-next-hint" class="small text-muted text-end mt-2">Duid minstens 3 drempels aan en kies bij elk minstens één strategie.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- DEEL 3 — 3.3 STAP 1: KIES JE DREMPEL                         -->
+  <!-- ============================================================ -->
+  <div id="page-deel3-uitwerken-kiezen" class="page">
+    <div class="progress-wrapper">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-1">
+        <span class="fw-bold progress-titel">Deel 3 — Strategieën</span>
+        <button type="button" class="btn btn-link btn-sm p-0 text-muted" style="text-decoration:none;" onclick="openBalkStijlModal()" title="Wijzig de stijl van je voortgangsbalk"><i class="bi bi-palette-fill"></i></button>
+      </div>
+      <div class="progress" style="height: 10px;"><div class="progress-bar" role="progressbar" style="width: 0%;"></div></div>
+    </div>
+  </div>
+
+    <div class="container py-4">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="mb-3"><span class="badge" style="background-color:var(--groeipunt);">3.3 · Stap 1</span><h1 class="h4 mt-2 mb-0">Werk jouw strategie uit — kies je drempel</h1></div>
+
+          <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+              <p class="small text-muted">Kies één drempel die het leren voor jou het moeilijkst maakt in deze opleiding. Dit kan iets zijn uit je planning, motivatie, stress of je privésituatie — iets dat jou regelmatig tegenhoudt.</p>
+              <div id="d3u-drempel-chips" class="mb-3"></div>
+
+              <label class="form-label fw-semibold" for="d3u-drempel">Welke drempel kies je?</label>
+              <div class="small text-muted mb-1">Voorbeeld: “Ik stel taken altijd uit.”</div>
+              <input type="text" class="form-control mb-3" id="d3u-drempel" oninput="saveStap1();valideerStap1()" placeholder="Mijn drempel…">
+
+              <label class="form-label fw-semibold" for="d3u-invloed">Welke invloed heeft deze drempel op jouw leren?</label>
+              <div class="small text-muted mb-1">Wat gebeurt er wanneer je deze drempel ervaart? Denk aan je studie, focus of motivatie.</div>
+              <textarea class="form-control mb-3" id="d3u-invloed" rows="2" oninput="saveStap1();valideerStap1()"></textarea>
+
+              <label class="form-label fw-semibold" for="d3u-situatie">In welk vak of welke situatie ervaar je deze drempel het meest?</label>
+              <div class="small text-muted mb-1">Denk aan een concrete les, opdracht of situatie.</div>
+              <textarea class="form-control" id="d3u-situatie" rows="2" oninput="saveStap1();valideerStap1()"></textarea>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-outline-secondary" onclick="goToPage('page-deel3-drempels-strategie')"><i class="bi bi-arrow-left me-2"></i>Terug</button>
+            <button class="btn btn-groeipunt" id="btn-d3u-stap1-next" disabled onclick="goToPage('page-deel3-uitwerken-plan')">Naar je plan <i class="bi bi-arrow-right ms-2"></i></button>
+          </div>
+          <div id="d3u-stap1-hint" class="small text-muted text-end mt-2">Vul de drie velden in om verder te gaan.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- DEEL 3 — 3.3 STAP 2-3-4: PLAN JE STRATEGIE                   -->
+  <!-- ============================================================ -->
+  <div id="page-deel3-uitwerken-plan" class="page">
+    <div class="progress-wrapper">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-1">
+        <span class="fw-bold progress-titel">Deel 3 — Strategieën</span>
+        <button type="button" class="btn btn-link btn-sm p-0 text-muted" style="text-decoration:none;" onclick="openBalkStijlModal()" title="Wijzig de stijl van je voortgangsbalk"><i class="bi bi-palette-fill"></i></button>
+      </div>
+      <div class="progress" style="height: 10px;"><div class="progress-bar" role="progressbar" style="width: 0%;"></div></div>
+    </div>
+  </div>
+
+    <div class="container py-4">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <div><span class="badge" style="background-color:var(--groeipunt);">3.3 · Stap 2–4</span><h1 class="h4 mt-2 mb-0">Plan je strategie</h1></div>
+            <span class="badge rounded-pill bg-light text-secondary border" id="d3u-plan-poging">Poging 1</span>
+          </div>
+
+          <div class="card border-0 shadow-sm mb-3">
+            <div class="card-body p-4">
+              <h2 class="h6 mb-3"><span class="text-muted">Stap 2 —</span> Kies je strategie</h2>
+              <label class="form-label fw-semibold" for="d3u-strategie">Welke strategie kies je?</label>
+              <div class="small text-muted mb-1">Voorbeeld: “Elke dag 10 minuten studeren na het avondeten.” Kies iets dat jij echt zou kunnen toepassen.</div>
+              <textarea class="form-control mb-3" id="d3u-strategie" rows="2" oninput="onPlanInput()"></textarea>
+              <label class="form-label fw-semibold" for="d3u-doel">Wat wil je bereiken met deze strategie?</label>
+              <textarea class="form-control" id="d3u-doel" rows="2" oninput="onPlanInput()"></textarea>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm mb-3">
+            <div class="card-body p-4">
+              <h2 class="h6 mb-3"><span class="text-muted">Stap 3 —</span> Plan je strategie</h2>
+              <label class="form-label fw-semibold" for="d3u-stappen">Deel de strategie op in kleine stappen</label>
+              <textarea class="form-control mb-3" id="d3u-stappen" rows="3" oninput="onPlanInput()"></textarea>
+              <label class="form-label fw-semibold" for="d3u-frequentie">Hoe vaak en wanneer ga je de strategie toepassen?</label>
+              <textarea class="form-control mb-3" id="d3u-frequentie" rows="2" oninput="onPlanInput()"></textarea>
+
+              <label class="form-label fw-semibold">Hoe haalbaar is dit voor jou?</label>
+              <div class="d-flex align-items-center gap-3 mb-1 schaal-haalbaar-wrap schaal-niet-ingesteld">
+                <div class="schaal-waarde-bol" id="schaal-haalbaar-bol">–</div>
+                <div class="flex-grow-1 schaal-wrap">
+                  <input type="range" min="1" max="10" step="1" value="5" class="schaal-slider" id="schaal-haalbaar" oninput="onHaalbaarInput()">
+                  <div class="schaal-getallen"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span></div>
+                </div>
+              </div>
+              <div class="small text-muted">1 = heel moeilijk · 10 = heel gemakkelijk</div>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm mb-3">
+            <div class="card-body p-4">
+              <h2 class="h6 mb-3"><span class="text-muted">Stap 4 —</span> Wat als het moeilijk wordt?</h2>
+              <label class="form-label fw-semibold" for="d3u-moeilijk">Wat kan het moeilijk maken om de strategie uit te voeren?</label>
+              <textarea class="form-control mb-3" id="d3u-moeilijk" rows="2" oninput="onPlanInput()"></textarea>
+              <label class="form-label fw-semibold" for="d3u-hulpbron">Wat ga je dan doen? Welke hulpbron gebruik je?</label>
+              <textarea class="form-control" id="d3u-hulpbron" rows="2" oninput="onPlanInput()"></textarea>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm mb-3" style="background-color:#e7f5f5;">
+            <div class="card-body p-4 text-center">
+              <i class="bi bi-rocket-takeoff-fill" style="font-size:2rem;color:var(--groeipunt);"></i>
+              <h2 class="h6 mt-2">Doe! Ga dit toepassen.</h2>
+              <p class="small mb-3">Omdat hier wat tijd over gaat, kun je nu een tussentijdse PDF maken en die op Moodle uploaden. Kom over <strong>een drietal weken</strong> terug om te evalueren (Stap 5).</p>
+              <button class="btn btn-groeipunt" onclick="genereerTussentijdsePDF()"><i class="bi bi-file-earmark-pdf me-2"></i>Genereer tussentijdse PDF</button>
+              <a href="https://moodle.groeipunt.be/mod/assign/view.php?id=2257009&forceview=1" target="_blank" rel="noopener" class="btn btn-success ms-2"><i class="bi bi-cloud-upload me-2"></i>Upload op Moodle <i class="bi bi-box-arrow-up-right ms-1"></i></a>
+              <div id="d3u-tussentijds-status" class="mt-3"></div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-outline-secondary" onclick="goToPage('page-deel3-uitwerken-kiezen')"><i class="bi bi-arrow-left me-2"></i>Terug</button>
+            <button class="btn btn-groeipunt" id="btn-d3u-plan-next" disabled onclick="goToPage('page-deel3-uitwerken-evaluatie')">Naar de evaluatie <i class="bi bi-arrow-right ms-2"></i></button>
+          </div>
+          <div id="d3u-plan-hint" class="small text-muted text-end mt-2">Vul alle velden in, inclusief de haalbaarheidsscore.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- DEEL 3 — 3.3 STAP 5: EVALUEER NA DRIE WEKEN                  -->
+  <!-- ============================================================ -->
+  <div id="page-deel3-uitwerken-evaluatie" class="page">
+    <div class="progress-wrapper">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-1">
+        <span class="fw-bold progress-titel">Deel 3 — Strategieën</span>
+        <button type="button" class="btn btn-link btn-sm p-0 text-muted" style="text-decoration:none;" onclick="openBalkStijlModal()" title="Wijzig de stijl van je voortgangsbalk"><i class="bi bi-palette-fill"></i></button>
+      </div>
+      <div class="progress" style="height: 10px;"><div class="progress-bar" role="progressbar" style="width: 0%;"></div></div>
+    </div>
+  </div>
+
+    <div class="container py-4">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <div><span class="badge" style="background-color:var(--groeipunt);">3.3 · Stap 5</span><h1 class="h4 mt-2 mb-0">Evalueer na drie weken</h1></div>
+            <span class="badge rounded-pill bg-light text-secondary border" id="d3u-eval-poging">Poging 1</span>
+          </div>
+          <div id="d3u-poging-historiek" class="mb-2"></div>
+
+          <div class="card border-0 shadow-sm mb-3">
+            <div class="card-body p-4">
+              <p class="small text-muted mb-3">Heb je je strategie een drietal weken kunnen uitproberen? Beantwoord dan deze vragen.</p>
+
+              <div class="d-flex justify-content-between align-items-center py-2 border-bottom flex-wrap gap-2">
+                <span>Was de strategie concreet genoeg?</span>
+                <span class="d-flex gap-3">
+                  <label class="small mb-0"><input type="radio" name="d3u-concreet" value="ja" class="form-check-input me-1" onchange="onEvalChange()">Ja</label>
+                  <label class="small mb-0"><input type="radio" name="d3u-concreet" value="nee" class="form-check-input me-1" onchange="onEvalChange()">Nee</label>
+                </span>
+              </div>
+              <div class="d-flex justify-content-between align-items-center py-2 border-bottom flex-wrap gap-2">
+                <span>Was het klein en haalbaar genoeg?</span>
+                <span class="d-flex gap-3">
+                  <label class="small mb-0"><input type="radio" name="d3u-klein" value="ja" class="form-check-input me-1" onchange="onEvalChange()">Ja</label>
+                  <label class="small mb-0"><input type="radio" name="d3u-klein" value="nee" class="form-check-input me-1" onchange="onEvalChange()">Nee</label>
+                </span>
+              </div>
+              <div class="d-flex justify-content-between align-items-center py-2 border-bottom flex-wrap gap-2">
+                <span>Heb ik het kunnen inplannen?</span>
+                <span class="d-flex gap-3">
+                  <label class="small mb-0"><input type="radio" name="d3u-ingepland" value="ja" class="form-check-input me-1" onchange="onEvalChange()">Ja</label>
+                  <label class="small mb-0"><input type="radio" name="d3u-ingepland" value="nee" class="form-check-input me-1" onchange="onEvalChange()">Nee</label>
+                </span>
+              </div>
+              <div class="d-flex justify-content-between align-items-center py-2 border-bottom flex-wrap gap-2">
+                <span>Helpt het om mijn doel te bereiken?</span>
+                <span class="d-flex gap-3">
+                  <label class="small mb-0"><input type="radio" name="d3u-helpt" value="ja" class="form-check-input me-1" onchange="onEvalChange()">Ja</label>
+                  <label class="small mb-0"><input type="radio" name="d3u-helpt" value="nee" class="form-check-input me-1" onchange="onEvalChange()">Nee</label>
+                </span>
+              </div>
+              <div class="d-flex justify-content-between align-items-center py-2 flex-wrap gap-2">
+                <span class="fw-semibold">Ga ik door met deze strategie?</span>
+                <span class="d-flex gap-3">
+                  <label class="small mb-0"><input type="radio" name="d3u-doorgaan" value="ja" class="form-check-input me-1" onchange="onEvalChange()">Ja</label>
+                  <label class="small mb-0"><input type="radio" name="d3u-doorgaan" value="nee-aanpassen" class="form-check-input me-1" onchange="onEvalChange()">Nee / ik pas aan</label>
+                </span>
+              </div>
+
+              <hr>
+              <div class="row g-3">
+                <div class="col-md-5">
+                  <label class="form-label small mb-1" for="d3u-eval-datum">Datum van tussentijdse evaluatie</label>
+                  <input type="date" class="form-control" id="d3u-eval-datum" onchange="onEvalChange()">
+                </div>
+                <div class="col-md-7">
+                  <label class="form-label small mb-1" for="d3u-eval-opmerking">Dit wil ik er nog over kwijt</label>
+                  <textarea class="form-control" id="d3u-eval-opmerking" rows="2" oninput="onEvalChange()"></textarea>
+                </div>
+              </div>
+              <div id="d3u-eval-hint" class="small text-muted mt-2">Beantwoord de vijf vragen en vul de datum in.</div>
+            </div>
+          </div>
+
+          <div id="d3u-eval-afronden" class="card border-0 shadow-sm mb-3" style="display:none;background-color:#e7f5f5;">
+            <div class="card-body p-4 text-center">
+              <p class="mb-2"><i class="bi bi-check-circle-fill me-2" style="color:var(--groeipunt);"></i>Je gaat door met je strategie. Mooi werk!</p>
+              <button class="btn btn-groeipunt" onclick="goToPage('page-deel3-afsluiting')">Naar de afronding <i class="bi bi-arrow-right ms-2"></i></button>
+            </div>
+          </div>
+
+          <div id="d3u-eval-aanpassen" class="card border-0 shadow-sm mb-3" style="display:none;background-color:#fff7e6;">
+            <div class="card-body p-4 text-center">
+              <p class="small mb-3">Geen probleem — bijsturen hoort erbij. Je <strong>drempel blijft dezelfde</strong>, maar je kiest een andere strategie en werkt ze opnieuw uit (stap 2 t.e.m. 5). Je vorige poging blijft bewaard, zodat je ze achteraf naast elkaar kunt leggen.</p>
+              <button class="btn btn-groeipunt" onclick="nieuwePoging()"><i class="bi bi-arrow-repeat me-2"></i>Nieuwe poging met dezelfde drempel</button>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-outline-secondary" onclick="goToPage('page-deel3-uitwerken-plan')"><i class="bi bi-arrow-left me-2"></i>Terug</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- DEEL 3 — AFSLUITING                                          -->
+  <!-- ============================================================ -->
+  <div id="page-deel3-afsluiting" class="page">
+    <div class="progress-wrapper">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-1">
+        <span class="fw-bold progress-titel">Deel 3 — Strategieën</span>
+        <button type="button" class="btn btn-link btn-sm p-0 text-muted" style="text-decoration:none;" onclick="openBalkStijlModal()" title="Wijzig de stijl van je voortgangsbalk"><i class="bi bi-palette-fill"></i></button>
+      </div>
+      <div class="progress" style="height: 10px;"><div class="progress-bar" role="progressbar" style="width: 0%;"></div></div>
+    </div>
+  </div>
+    <div class="container py-4">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm text-center">
+            <div class="card-body p-4 p-md-5">
+              <i class="bi bi-trophy-fill" style="font-size:3rem;color:var(--groeipunt);"></i>
+              <h1 class="h3 mt-3">Je bent klaar met Deel 3 — Strategieën!</h1>
+              <p class="lead text-muted">Genereer de volledige PDF van Deel 3 (je strategieën per drempel én je uitgewerkte plan) en upload die op Moodle.</p>
+
+              <button class="btn btn-groeipunt btn-lg mt-2" id="pdf-deel3-btn" onclick="genereerDeel3PDF()">
+                <i class="bi bi-file-earmark-pdf me-2"></i>Genereer PDF van Deel 3
+              </button>
+              <a href="https://moodle.groeipunt.be/mod/assign/view.php?id=2257013&forceview=1" target="_blank" rel="noopener" class="btn btn-success btn-lg mt-2 ms-2" id="moodle-upload-deel3">
+                <i class="bi bi-cloud-upload me-2"></i>Upload op Moodle <i class="bi bi-box-arrow-up-right ms-1"></i>
+              </a>
+              <div id="pdf-deel3-status" class="mt-3"></div>
+
+              <hr class="my-4">
+              <p class="mb-2 small text-muted">Lukt het uploaden niet?</p>
+              <a href="https://moodle.groeipunt.be/mod/book/view.php?id=539563&chapterid=15385" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-question-circle me-1"></i>Handleiding: uploaden op Moodle
+              </a>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-outline-secondary" onclick="goToPage('page-deel3-uitwerken-evaluatie')"><i class="bi bi-arrow-left me-2"></i>Vorige</button>
+            <button class="btn btn-outline-secondary" onclick="goToPage('page-overzicht')">Alle delen <i class="bi bi-grid ms-1"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Modal voor "Alinea uit de tekst" -->
   <div class="modal fade" id="alinea-modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -3923,8 +4418,17 @@
         'page-deel2-zelfbeeld-casus',
         'page-deel2-zelfbeeld-drempels',
         'page-deel2-afsluiting'
+      ],
+      3: [
+        'page-deel3-intro',
+        'page-deel3-strategie-theorie',
+        'page-deel3-drempels-strategie',
+        'page-deel3-uitwerken-kiezen',
+        'page-deel3-uitwerken-plan',
+        'page-deel3-uitwerken-evaluatie',
+        'page-deel3-afsluiting'
       ]
-      // Deel 3, 4 worden later toegevoegd
+      // Deel 4 volgt later
     };
 
     function getDeelVoorPagina(pageId) {
@@ -4330,6 +4834,19 @@
       }
       if (pageId === 'page-deel2-afsluiting') {
         setTimeout(() => toonDeel2OntgrendelMelding(), 60);
+      }
+      // =========================  DEEL 3  =========================
+      if (pageId === 'page-deel3-drempels-strategie') {
+        setTimeout(() => render32A(), 50);
+      }
+      if (pageId === 'page-deel3-uitwerken-kiezen') {
+        setTimeout(() => initStap1(), 50);
+      }
+      if (pageId === 'page-deel3-uitwerken-plan') {
+        setTimeout(() => initPlan(), 50);
+      }
+      if (pageId === 'page-deel3-uitwerken-evaluatie') {
+        setTimeout(() => initEval(), 50);
       }
     }
 
@@ -7888,6 +8405,718 @@
       });
     }
 
+
+    // =================================================================
+    //  DEEL 3 — STRATEGIEËN
+    // =================================================================
+
+    // --- 3.2.A : drempels + bijhorende strategieën (datagestuurd) ---
+    const DREMPEL_STRATEGIEEN = [
+      {
+        id: 'deadlines',
+        titel: 'Veel deadlines tegelijk',
+        toelichting: 'Er vallen meerdere deadlines in dezelfde periode. De planning en verwachtingen voelen onduidelijk of te zwaar, waardoor het moeilijk is om overzicht te houden. Dat geeft stress en het gevoel dat het systeem niet aansluit bij wat je aankan.',
+        strategieen: [
+          'Ik maak bij de start een afspraak met een leertrajectcoach (brede basiszorg) om samen te kijken welke strategie het best bij mij past.',
+          'Ik bespreek met de betrokken leerkrachten of er oplossingen mogelijk zijn voor de vele deadlines.',
+          'Ik maak een visuele planning van alle deadlines.',
+          'Ik gebruik kleurtjes om onderscheid te maken tussen studietijd, vrije tijd en deadlines.',
+          'Ik gebruik een grote to-dolijst plus een kleinere lijst met max. 3 prioriteiten waar ik me telkens echt op focus.',
+          'Ik werk met tussentijdse mini-deadlines.',
+          'Ik begin met de zwaarste taak.',
+          'Ik plan 1 bufferdag: een vrije of extra geplande dag om achterstand in te halen of onverwachte problemen op te lossen, zonder extra druk.'
+        ]
+      },
+      {
+        id: 'faalangst',
+        titel: 'Faalangst — blokkeren bij toetsen',
+        toelichting: 'Ik wil het graag heel goed doen; daardoor ervaar ik stress als ik fouten kan maken. Ik leg de lat hoog en vind het resultaat van toetsen belangrijk.',
+        strategieen: [
+          'Ik maak een oefentoets zonder punten om te wennen aan de situatie.',
+          'Ik gebruik een ademhalingsoefening voor elke toets.',
+          'Ik vraag vooraf aan de leerkracht wat ik precies moet kunnen.',
+          'Ik schrijf na elke toets één ding op dat wél lukte.',
+          'Ik spreek vooraf met mijn leertrajectcoach (LTC).',
+          "Ik bedenk vooraf helpende gedachten, schrijf ze op en herlees ze voor de toets (bv. '50% is ook geslaagd', 'fouten maken mag en hoort bij leren').",
+          'Voor ik start, noteer ik alles wat ik weet op een kladblad, zodat ik visuele houvast heb tijdens de toets.',
+          'Ik contacteer de verhoogde zorgmedewerker: die kan met mij uitzoeken wat ik nodig heb om met een goed gevoel te starten (bv. extra tijd, een koptelefoon tegen geluid, mondelinge toelichting…).'
+        ]
+      },
+      {
+        id: 'digitaal',
+        titel: 'Digitale leerplatformen zijn niet eenvoudig te begrijpen',
+        toelichting: 'Ik vind het digitale leerplatform moeilijk om te gebruiken. Ik weet niet altijd waar ik mijn taken of informatie vind. Daardoor verlies ik tijd en voel ik me onzeker tijdens het studeren.',
+        strategieen: [
+          'Ik volg de Moodle hulp-module: <a href="https://moodle.groeipunt.be/course/view.php?id=2912" target="_blank" rel="noopener">de Moodle-hulpmodule</a>.',
+          'Ik vraag mijn lesgever om hulp.',
+          'Ik noteer bij de startpresentatie van elke module meteen alle deadlines in mijn agenda.',
+          'Ik check het moduleplan/de agenda; daar staat de hele planning van de module in.',
+          'Ik vraag hulp bij mijn eerste poging, bijvoorbeeld aan een medecursist.',
+          'Ik ga naar het Open Leercentrum voor extra uitleg en ondersteuning.'
+        ]
+      },
+      {
+        id: 'onzeker',
+        titel: 'Ik ben onzeker over mezelf in het leerproces',
+        toelichting: 'Ik vind het belangrijk om het goed te doen en ben heel kritisch voor mezelf. Ik twijfel vaak of ik het kan. Die twijfels vragen veel energie en zorgen ervoor dat ik minder goed kan leren. Soms vermijd ik leren, stel ik uit of geef ik op als het moeilijk wordt.',
+        strategieen: [
+          'Ik noteer elke dag of elke week 3 kleine successen.',
+          'Ik bedenk elke avond 1 ding dat goed ging vandaag.',
+          'Ik hou positieve feedback bij in 1 document.',
+          "Ik vraag expliciet: 'wat deed ik goed?'.",
+          'Ik schrijf op wie in mij gelooft; als ik het moeilijk heb, ga ik met hen in gesprek. (Tip: ook een leertrajectcoach kan dit gesprek met je voeren.)',
+          'Ik let op mijn ademhaling zodat er voldoende zuurstof naar mijn hersenen gaat. Ik spreek mijn jongere ik aan: proberen, en alles wat ik doe is beter dan niks.'
+        ]
+      },
+      {
+        id: 'taal',
+        titel: 'Moeilijk taalgebruik',
+        toelichting: 'De cursussen zijn vaak moeilijk en ingewikkeld geschreven. Soms begrijp ik de uitleg of opdrachten niet goed, waardoor ik moet herlezen of hulp nodig heb. Dat kost tijd en maakt me onzeker, waardoor studeren zwaarder aanvoelt.',
+        strategieen: [
+          'Ik maak een woordenlijst van moeilijke woorden.',
+          'Ik markeer kernwoorden, liefst vóór de les start zodat ik meteen mee kan volgen.',
+          'Ik herschrijf moeilijke zinnen in gewone taal die ik zelf begrijp.',
+          'Ik stel verduidelijkingsvragen.',
+          'Ik herlees binnen 24 uur.',
+          "Ik lees de cursus op voorhand en duid moeilijke woorden aan om ze te 'vertalen'.",
+          'Ik vraag hulp aan de leerkracht.',
+          'Ik vraag hulp aan de leertrajectcoach of leercoach.',
+          'Ik laat de cursus voorlezen door mijn webbrowser (zie de <a href="https://drive.google.com/file/d/1z6n7xceQrBlAKzKrKmKg4F8Zlzq1OkLF/view?usp=sharing" target="_blank" rel="noopener">handleiding</a>).',
+          'Ik voeg de cursus toe aan een AI-chatbot en vraag om de inhoud te behouden maar het taalniveau te verlagen — met nadruk dat begrippen niet verdwijnen, maar in eenvoudige taal worden uitgelegd.'
+        ]
+      },
+      {
+        id: 'tempo',
+        titel: 'Hoog tempo in de opleiding',
+        toelichting: 'Ik ervaar het tempo als te hoog, zeker bij meerdere modules tegelijk. Mijn hoofd zit snel vol en ik kan de leerstof niet goed verwerken of bijhouden. Daardoor raak ik het overzicht kwijt en voel ik me snel overweldigd.',
+        strategieen: [
+          'Ik maak na de les een korte samenvatting.',
+          'Ik stel onmiddellijk vragen.',
+          'Ik bekijk de leerstof vóór de les en noteer wat ik niet begrijp, zodat ik gerichter kan volgen en vragen stellen.',
+          'Ik werk samen met een klasgenoot.',
+          'Ik herbekijk de leerstof binnen 24 uur.',
+          'Ik vraag een gesprek aan bij een leertrajectcoach.',
+          'Ik beperk de studielast door minder modules tegelijk te volgen.',
+          'Een module hernemen mag ook.'
+        ]
+      },
+      {
+        id: 'piekeren',
+        titel: 'Piekeren',
+        toelichting: 'Ik pieker veel over mijn studie en blijf nadenken over wat kan misgaan. Daardoor concentreer ik me moeilijk. Mijn hoofd komt niet tot rust, zelfs niet als ik wil studeren of slapen. Soms stel ik taken uit omdat het te zwaar aanvoelt — dat vergroot mijn stress.',
+        strategieen: [
+          'Ik plan 10 minuten piekertijd.',
+          'Ik schrijf mijn zorgen op voor ik studeer.',
+          'Ik doe een ademhalingsoefening.',
+          'Druktherapie met een zwaartedeken, zwaartekussen, stevige knuffel of huisdier op schoot.',
+          'Ik verbind met mezelf: wat voel ik, waarom, kan ik er iets aan veranderen? In combinatie met diep en traag ademen.',
+          'Stap voor stap: ik splits taken in kleinere stukken.',
+          'Ik vraag uitleg zodat ik de opdracht goed begrijp.',
+          'Ik doe een ontspannende activiteit die mijn hoofd leegmaakt (wandelen, sporten, muziek…).',
+          'Ik zorg voor een goede nachtrust.'
+        ]
+      },
+      {
+        id: 'slaap',
+        titel: 'Slaapproblemen',
+        toelichting: 'Ik slaap vaak slecht, waardoor ik moe ben en me moeilijk kan concentreren. Dat maakt het lastiger om leerstof te begrijpen en te onthouden. Goede slaap is belangrijk: je hersenen herstellen dan en verwerken informatie beter.',
+        strategieen: [
+          'Ik plan geen zware studietaken laat op de avond.',
+          'Ik stop met schermen 30 minuten voor het slapen.',
+          'Ik plan moeilijke taken op mijn energiemoment.',
+          'Ik werk in korte blokken.',
+          'Ik val in slaap met slaapmuziek met timer, zodat de muziek vanzelf stopt.',
+          'Ik lees voor het slapengaan.',
+          'Ik maak enkele hersenkrakers net voor het slapen om mijn brein gericht bezig te houden.',
+          'Ik zorg voor een rustige slaapomgeving en -routine (donkere, verluchte kamer, vast slaapuur, geen schermen in bed…).',
+          'Ik contacteer mijn huisarts en bespreek mijn slaapmoeilijkheden.',
+          'Meditatie of een ademhalingsoefening.',
+          "Ik maak een lijst van to-do's of gedachten die me wakker houden, zodat ze 's nachts niet door mijn hoofd spoken."
+        ]
+      },
+      {
+        id: 'thuis',
+        titel: 'Spanning en negatieve emoties in mijn thuissituatie',
+        toelichting: 'Ik ervaar thuis vaak spanning en negatieve emoties, waardoor mijn hoofd moeilijk tot rust komt. Daardoor concentreer ik me minder goed en heb ik weinig energie om te studeren. Soms neem ik die stress mee tijdens het leren.',
+        strategieen: [
+          'Ik plan moeilijke gesprekken buiten studietijd; mijn studietijd plan ik bewust op momenten dat ik ruimte kan vrijhouden.',
+          'Ik spreek mijn studiemomenten af met de mensen in mijn gezin.',
+          'Ik zoek steun bij iemand die ik vertrouw.',
+          'Ik neem 5 minuten pauze bij sterke emoties.',
+          'Ik vraag een gesprek aan met een verhoogde zorgmedewerker (ondersteunt cursisten bij spanningen, stress, concentratie- of faalangstproblemen).',
+          'Ik maak een overzicht van zaken die me tot rust brengen.',
+          'Bij stress doe ik enkele minuten ademhalingstechnieken.',
+          'Ik werk in het Open Leercentrum, op de campus of in de bibliotheek, waar ik zeker rust heb.'
+        ]
+      },
+      {
+        id: 'groep',
+        titel: 'Onveilig of ongemakkelijk gevoel in groepsopdrachten of klassituaties',
+        toelichting: 'Ik voel me vaak ongemakkelijk of onzeker in groepsopdrachten of in de klas. Ik vind het moeilijk om spontaan iets te zeggen of een vraag te stellen, en heb meer tijd nodig om te verwerken wanneer het mijn beurt is. Soms ben ik bang voor de reactie van anderen en trek ik me terug.',
+        strategieen: [
+          'Ik kies een vaste zitplaats waar ik me veilig voel.',
+          'Ik neem korte pauzes als ik overweldigd ben.',
+          'Ik ga vooraf met de leerkracht in gesprek over wat mij helpt in de (online) klas of bij een groepsopdracht.',
+          "Ik deel mijn 'handleiding' met de lesgever en groepsgenoten: waar ik over struikel en wat me helpt (bv. 'ik raak in de war wie wat doet; ik heb een duidelijke takenlijst op papier nodig').",
+          'Ik vraag een gesprek aan met een verhoogde zorgmedewerker, ook over maatregelen die het haalbaar maken om de lessen te volgen (bv. niet aangeduid worden voor een online vraag, een vaste plek in het lokaal…).'
+        ]
+      },
+      {
+        id: 'fixed',
+        titel: "Fixed mindset: 'ik kan dit niet en ga dit ook nooit kunnen'",
+        toelichting: "Ik heb vaste overtuigingen over mezelf, soms doordat iemand ooit zei dat ik iets nooit zou kunnen. Daardoor denk ik bij veel dingen 'dit kan ik niet'. Je grenzen kennen is nuttig; tegelijk helpt het om te onderscheiden welk (kleiner) deel je 'niet' kan en welk deel je 'nog niet' kan.",
+        strategieen: [
+          "Ik vervang 'ik kan dit niet' door 'ik kan dit NOG niet'.",
+          'Ik schrijf op wat ik dit jaar al geleerd heb.',
+          'Ik kies 1 kleine oefening om vooruitgang te testen.',
+          'Ik evalueer inspanning of vooruitgang, niet alleen het resultaat.',
+          'Ik hang helpende quotes op een zichtbare plek (bv. de spiegel).',
+          'Ik zoek succesmomenten uit het verleden (wanneer dacht je dit ook, maar bleek het toch te lukken?).',
+          'Mijn leertrajectcoach weet dat ik het wél kan.',
+          'Ik ga in gesprek met mijn leertrajectcoach of de verhoogde zorgmedewerker.'
+        ]
+      },
+      {
+        id: 'studieplek',
+        titel: 'Gebrek aan een rustige studieplek',
+        toelichting: 'Ik heb thuis geen rustige plek om te studeren, waardoor ik me moeilijk kan concentreren.',
+        strategieen: [
+          'Ik zoek 1 vaste stille plek en maak daarover afspraken met mijn huisgenoten.',
+          'Ik gebruik oordoppen of een noise-cancelling koptelefoon.',
+          'Ik plan studietijd wanneer het thuis rustig is.',
+          'Ik ga naar de bibliotheek, of studeer bij de buren of bij vrienden.',
+          'Ik ga naar het <a href="https://www.groeipunt.be/info/open-leercentrum" target="_blank" rel="noopener">Open Leercentrum</a> om te studeren.'
+        ]
+      },
+      {
+        id: 'perfectionisme',
+        titel: 'Perfectionisme / moeilijk afronden',
+        toelichting: "Ik heb een hoge kwaliteitsstandaard en oog voor detail. Daardoor werk ik soms te lang door, begin ik niet aan moeilijke taken of blijf ik hangen in het eerste stuk. Wanneer ik dit koppel aan leren afronden ('goed is goed genoeg'), kan ik voldoende goed werk afleveren.",
+        strategieen: [
+          'Ik stel een tijdslimiet in (bv. 45 min) waarbinnen ik een taak afwerk.',
+          "Ik spreek vooraf af wat 'goed genoeg' is.",
+          'Ik vraag de leerkracht vooraf een duidelijke lijst met verwachtingen en probeer daar niet over te gaan.',
+          'Ik bespreek met een leertrajectcoach hoe ik realistische verwachtingen kan stellen (<a href="https://moodle.groeipunt.be/course/view.php?id=11737" target="_blank" rel="noopener">zorgaanbod</a>).',
+          'Ik dien mijn taak in op het geplande moment.',
+          'Ik werk met een checklist in plaats van mijn taak blijvend beter te maken.',
+          'Ik stop wanneer mijn planning zegt dat ik stop.',
+          'Top-down werken: eerst de grote lijnen, dan pas detail.'
+        ]
+      },
+      {
+        id: 'uitstel',
+        titel: 'Uitstelgedrag — moeite met starten',
+        toelichting: 'Ik stel taken regelmatig uit; ze worden vlak voor de deadline onder hoge spanning uitgevoerd. In aanloop zoek ik vaak afleiding (social media, opruimen…), met onrust en schuldgevoel. Ik werk soms goed onder druk, maar de stress en het niet altijd halen van de deadline voelen als een drempel.',
+        strategieen: [
+          'Ik begin met slechts 10 minuten te werken; de lat bewust laag. Doe ik verder? Top. Stop ik na 10 minuten? Ook top — 10 minuten is beter dan niks.',
+          'Ik schrijf de taak in stapjes op papier, zodat ze zichtbaar is en mijn brein ontlast.',
+          'Ik doe eerst de kleinste stap. One down!',
+          'Ik werk met een timer.',
+          'Ik spreek af om samen te werken met een medecursist (body doubling).',
+          'Ik werk met een beloning: bv. iets lekkers bij elke kleine stap.',
+          'Ik leg mijn gsm weg tijdens het studeren.',
+          'Ik ga naar het Open Leercentrum om te studeren, het liefst wanneer ik toch al op de campus moet zijn.',
+          'Ik heb een agenda waarin zowel deadlines als werktijd staan ingepland.',
+          'Ik start altijd op een vast uur.'
+        ]
+      },
+      {
+        id: 'plannen',
+        titel: 'Moeite met plannen',
+        toelichting: 'Ik verlies vaak het overzicht van wat ik wanneer moet doen. Ik weet niet goed waar te beginnen en bij veel taken raak ik het overzicht kwijt. Ik ben de hele tijd bezig, maar werk weinig af, en krijg stress van naderende deadlines. Ik wil beter leren plannen om rustiger en op tijd te werken.',
+        strategieen: [
+          'Ik maak elke zondag een weekplanning.',
+          'Ik zet alle deadlines in één duidelijk, heel visueel overzicht.',
+          'Ik kies elke dag maximaal drie prioriteiten.',
+          'Ik gebruik één vaste agenda voor alles, en plan ook werktijd in.',
+          'Ik gebruik kleuren in mijn agenda: studie, deadlines, vrije tijd.',
+          'Ik maak 1 grote to-dolijst plus een prioriteitenlijst met max. 3 punten waar ik die dag op focus.',
+          'Per vak/opdracht bepaal ik deelstappen en werktijd, en plan die in mijn agenda.',
+          'Ik gebruik een digitale agenda met meerdere ingestelde reminders per taak.',
+          'Ik zorg dat ik elke dag 1 uur voor school werk.'
+        ]
+      },
+      {
+        id: 'tijd',
+        titel: 'Tijdsgebrek',
+        toelichting: 'Ik heb vaak het gevoel te weinig tijd te hebben. Ik combineer studie met werk of thuis, waardoor ik taken uitstel. Ik moet snel werken en kan minder goed focussen. Ik wil beter met mijn tijd omgaan om rustiger te studeren en op tijd klaar te zijn.',
+        strategieen: [
+          'Ik studeer in blokken van 20 minuten.',
+          'Ik maak een grondige planning.',
+          'Ik plan vaste studiemomenten in mijn agenda.',
+          'Ik bespreek mijn planning thuis.',
+          'Ik stel realistische weekdoelen.',
+          'Ik breng in kaart wie me kan helpen en wanneer (babysit, partner, vriend die huishoudelijke taken overneemt…).',
+          'Ik multitask niet: ik baken af wanneer ik studeer en wanneer ik iets anders doe.',
+          'Ik baken af waar ik wat doe (bv. studeren altijd op school of aan mijn bureau).'
+        ]
+      }
+    ];
+
+    // Snel een drempel ophalen op id
+    function getDrempel(id) { return DREMPEL_STRATEGIEEN.find(d => d.id === id); }
+
+    // Zorg dat de Deel 3-state bestaat
+    function ensureDeel3State() {
+      if (!appState.deel3 || Array.isArray(appState.deel3)) appState.deel3 = {};
+      if (!appState.deel3.strategie32A) appState.deel3.strategie32A = {};
+      return appState.deel3;
+    }
+
+    // Bouw de drempelkaarten van oefening 3.2.A
+    function render32A() {
+      const lijst = document.getElementById('d3-drempel-lijst');
+      if (!lijst) return;
+      ensureDeel3State();
+      lijst.innerHTML = DREMPEL_STRATEGIEEN.map(d => {
+        const stratHtml = d.strategieen.map((s, i) => `
+          <label class="d-flex gap-2 align-items-start py-1" style="cursor:pointer;">
+            <input class="form-check-input mt-1 flex-shrink-0 d3-strat" type="checkbox" data-drempel="${d.id}" value="${i}" onchange="on32AStrat('${d.id}')">
+            <span class="small">${s}</span>
+          </label>`).join('');
+        return `
+        <div class="card border-0 shadow-sm mb-2 d3-kaart" id="d3-kaart-${d.id}">
+          <button type="button" class="btn text-start p-0 w-100 d3-kaart-kop" onclick="toggle32A('${d.id}')" style="border:none;">
+            <div class="d-flex gap-3 align-items-start p-3">
+              <span class="d3-chk" id="d3-chk-${d.id}"></span>
+              <span class="flex-grow-1">
+                <span class="fw-bold d-block">${d.titel}</span>
+                <span class="small text-muted">${d.toelichting}</span>
+              </span>
+              <i class="bi bi-chevron-down d3-car" id="d3-car-${d.id}"></i>
+            </div>
+          </button>
+          <div class="d3-body" id="d3-body-${d.id}" style="display:none;">
+            <div class="px-3 pb-3" style="padding-left:3.25rem !important;">
+              <div class="small fw-semibold text-muted mb-1">Welke strategie(ën) zou jij willen proberen?</div>
+              ${stratHtml}
+              <label class="d-flex gap-2 align-items-center py-1 flex-wrap">
+                <input class="form-check-input mt-0 flex-shrink-0 d3-strat-eigen" type="checkbox" data-drempel="${d.id}" id="d3-eigenchk-${d.id}" onchange="on32AEigenCheck('${d.id}')">
+                <span class="small">Mijn eigen strategie:</span>
+                <input type="text" class="form-control form-control-sm d3-eigen" id="d3-eigentxt-${d.id}" style="max-width:320px;" placeholder="…" disabled oninput="on32AStrat('${d.id}')">
+              </label>
+
+              <div class="mt-3 pt-3" style="border-top:1px solid #eee;">
+                <div class="small mb-1">Waar ervaar ik deze drempel het sterkst (in een bepaald vak, soort toets…)? <span class="d3-req text-muted" id="d3-req-${d.id}">— invullen zodra je een strategie kiest</span></div>
+                <textarea class="form-control form-control-sm mb-2 d3-q-sterkst" id="d3-sterkst-${d.id}" rows="2" oninput="on32AVraag('${d.id}')"></textarea>
+                <div class="small mb-1">Hoe / wanneer / waarbij ga ik de strategie(ën) gebruiken?</div>
+                <textarea class="form-control form-control-sm mb-2 d3-q-gebruik" id="d3-gebruik-${d.id}" rows="2" oninput="on32AVraag('${d.id}')"></textarea>
+                <div class="small mb-1">Waar ervaar ik deze drempel niet, en hoe komt dat?</div>
+                <textarea class="form-control form-control-sm d3-q-niet" id="d3-niet-${d.id}" rows="2" oninput="on32AVraag('${d.id}')"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+      restore32A();
+      valideer32A();
+    }
+
+    // Klik op een drempelkaart: open/dicht + aanduiden
+    function toggle32A(id) {
+      const body = document.getElementById('d3-body-' + id);
+      if (!body) return;
+      const open = body.style.display === 'none' || body.style.display === '';
+      body.style.display = open ? 'block' : 'none';
+      const car = document.getElementById('d3-car-' + id);
+      if (car) car.className = 'bi bi-chevron-' + (open ? 'up' : 'down') + ' d3-car';
+      const chk = document.getElementById('d3-chk-' + id);
+      if (chk) {
+        if (open) { chk.classList.add('aan'); chk.innerHTML = '<i class="bi bi-check"></i>'; }
+        else { chk.classList.remove('aan'); chk.innerHTML = ''; }
+      }
+      const kaart = document.getElementById('d3-kaart-' + id);
+      if (kaart) kaart.classList.toggle('d3-kaart-open', open);
+      ensureDeel3State();
+      const st = appState.deel3.strategie32A[id] || {};
+      st.open = open;
+      appState.deel3.strategie32A[id] = st;
+      saveState();
+      valideer32A();
+    }
+
+    // Eigen-strategie-checkbox aan/uit
+    function on32AEigenCheck(id) {
+      const chk = document.getElementById('d3-eigenchk-' + id);
+      const txt = document.getElementById('d3-eigentxt-' + id);
+      if (txt) { txt.disabled = !chk.checked; if (!chk.checked) txt.value = ''; }
+      on32AStrat(id);
+    }
+
+    // Strategiekeuze gewijzigd → opslaan + valideren + verplicht-markering
+    function on32AStrat(id) { save32A(id); markVragenVerplicht(id); valideer32A(); }
+    function on32AVraag(id)  { save32A(id); valideer32A(); }
+
+    // Lees één drempel uit de DOM naar de state
+    function save32A(id) {
+      ensureDeel3State();
+      const gekozen = Array.from(document.querySelectorAll('.d3-strat[data-drempel="' + id + '"]:checked')).map(c => parseInt(c.value, 10));
+      const eigenChk = document.getElementById('d3-eigenchk-' + id);
+      const eigenTxt = document.getElementById('d3-eigentxt-' + id);
+      const eigen = (eigenChk && eigenChk.checked && eigenTxt) ? eigenTxt.value.trim() : '';
+      const st = appState.deel3.strategie32A[id] || {};
+      st.open = (document.getElementById('d3-body-' + id) || {}).style ? document.getElementById('d3-body-' + id).style.display !== 'none' : st.open;
+      st.strategieen = gekozen;
+      st.eigen = eigen;
+      st.sterkst = (document.getElementById('d3-sterkst-' + id) || {}).value || '';
+      st.gebruik = (document.getElementById('d3-gebruik-' + id) || {}).value || '';
+      st.niet    = (document.getElementById('d3-niet-' + id) || {}).value || '';
+      appState.deel3.strategie32A[id] = st;
+      saveState();
+    }
+
+    // Herstel alle drempels uit de state naar de DOM
+    function restore32A() {
+      ensureDeel3State();
+      const data = appState.deel3.strategie32A || {};
+      DREMPEL_STRATEGIEEN.forEach(d => {
+        const st = data[d.id];
+        if (!st) return;
+        if (st.open) {
+          const body = document.getElementById('d3-body-' + d.id);
+          if (body) body.style.display = 'block';
+          const car = document.getElementById('d3-car-' + d.id);
+          if (car) car.className = 'bi bi-chevron-up d3-car';
+          const chk = document.getElementById('d3-chk-' + d.id);
+          if (chk) { chk.classList.add('aan'); chk.innerHTML = '<i class="bi bi-check"></i>'; }
+          const kaart = document.getElementById('d3-kaart-' + d.id);
+          if (kaart) kaart.classList.add('d3-kaart-open');
+        }
+        (st.strategieen || []).forEach(i => {
+          const c = document.querySelector('.d3-strat[data-drempel="' + d.id + '"][value="' + i + '"]');
+          if (c) c.checked = true;
+        });
+        if (st.eigen) {
+          const ec = document.getElementById('d3-eigenchk-' + d.id);
+          const et = document.getElementById('d3-eigentxt-' + d.id);
+          if (ec) ec.checked = true;
+          if (et) { et.disabled = false; et.value = st.eigen; }
+        }
+        const set = (suf, val) => { const e = document.getElementById('d3-' + suf + '-' + d.id); if (e && val) e.value = val; };
+        set('sterkst', st.sterkst); set('gebruik', st.gebruik); set('niet', st.niet);
+        markVragenVerplicht(d.id);
+      });
+    }
+
+    // Heeft deze drempel minstens één strategie gekozen?
+    function drempelHeeftStrategie(id) {
+      const st = (appState.deel3.strategie32A || {})[id] || {};
+      return (st.strategieen && st.strategieen.length > 0) || (st.eigen && st.eigen.trim().length > 0);
+    }
+
+    // Zet de "verplicht"-markering bij de drie vragen van een drempel
+    function markVragenVerplicht(id) {
+      const req = document.getElementById('d3-req-' + id);
+      if (!req) return;
+      if (drempelHeeftStrategie(id)) {
+        req.textContent = '(verplicht)';
+        req.classList.remove('text-muted');
+        req.classList.add('text-danger');
+      } else {
+        req.textContent = '— invullen zodra je een strategie kiest';
+        req.classList.add('text-muted');
+        req.classList.remove('text-danger');
+      }
+    }
+
+    // Validatie 3.2.A: min. 3 drempels mét strategie, en bij elk de 3 vragen ingevuld
+    function valideer32A() {
+      ensureDeel3State();
+      const data = appState.deel3.strategie32A || {};
+      const metStrategie = DREMPEL_STRATEGIEEN.filter(d => drempelHeeftStrategie(d.id));
+      const tellerEl = document.getElementById('d3-teller');
+      if (tellerEl) tellerEl.textContent = metStrategie.length;
+
+      let klaar = true, reden = '';
+      if (metStrategie.length < 3) {
+        klaar = false;
+        reden = 'Duid minstens 3 drempels aan en kies bij elk minstens één strategie.';
+      } else {
+        const onvolledig = metStrategie.filter(d => {
+          const st = data[d.id] || {};
+          return !(st.sterkst && st.sterkst.trim()) || !(st.gebruik && st.gebruik.trim()) || !(st.niet && st.niet.trim());
+        });
+        if (onvolledig.length) {
+          klaar = false;
+          reden = 'Vul bij elke gekozen drempel de drie vragen in.';
+        }
+      }
+      const btn = document.getElementById('btn-3-2-A-next');
+      const hint = document.getElementById('d3-next-hint');
+      if (btn) { btn.disabled = !klaar; if (klaar) btn.removeAttribute('title'); else btn.title = reden; }
+      if (hint) { hint.textContent = reden; hint.style.display = klaar ? 'none' : 'block'; }
+      return klaar;
+    }
+
+    // --- 3.3 : strategie uitwerken in 5 stappen (met pogingen) ---
+
+    function legePoging() {
+      return { strategie:'', doel:'', stappen:'', frequentie:'', haalbaar:null, moeilijk:'', hulpbron:'', evaluatie:{} };
+    }
+    function ensureUitwerking() {
+      ensureDeel3State();
+      const u = appState.deel3.uitwerking;
+      if (!u || !u.pogingen || !u.pogingen.length) {
+        appState.deel3.uitwerking = { drempel:'', invloed:'', situatie:'', pogingen:[ legePoging() ], actief:0 };
+      }
+      if (typeof appState.deel3.uitwerking.actief !== 'number') appState.deel3.uitwerking.actief = 0;
+      return appState.deel3.uitwerking;
+    }
+    function huidigePoging() { const u = ensureUitwerking(); return u.pogingen[u.actief]; }
+
+    // Kleine DOM-helpers (d3-prefix om botsingen te vermijden)
+    function d3val(id) { const e = document.getElementById(id); return e ? e.value : ''; }
+    function d3set(id, v) { const e = document.getElementById(id); if (e && v != null) e.value = v; }
+    function d3gate(btnId, ok, hintId, reden) {
+      const b = document.getElementById(btnId);
+      if (b) { b.disabled = !ok; if (ok) b.removeAttribute('title'); else b.title = reden; }
+      const h = document.getElementById(hintId);
+      if (h) { h.textContent = ok ? '' : reden; h.style.display = ok ? 'none' : 'block'; }
+    }
+    function d3radio(name) { const r = document.querySelector('input[name="' + name + '"]:checked'); return r ? r.value : ''; }
+    function d3setRadio(name, v) { if (!v) return; const r = document.querySelector('input[name="' + name + '"][value="' + v + '"]'); if (r) r.checked = true; }
+
+    function renderPogingBadge(id) {
+      const el = document.getElementById(id); if (!el) return;
+      const u = ensureUitwerking();
+      el.textContent = 'Poging ' + (u.actief + 1) + (u.pogingen.length > 1 ? ' van ' + u.pogingen.length : '');
+    }
+
+    // ----- Stap 1: kies je drempel -----
+    function initStap1() { ensureUitwerking(); renderDrempelChips(); restoreStap1(); valideerStap1(); }
+    function renderDrempelChips() {
+      const wrap = document.getElementById('d3u-drempel-chips'); if (!wrap) return;
+      const gekozen = DREMPEL_STRATEGIEEN.filter(d => drempelHeeftStrategie(d.id));
+      if (!gekozen.length) { wrap.innerHTML = ''; return; }
+      wrap.innerHTML = '<div class="small text-muted mb-1">Je duidde deze drempels aan in 3.2.A — klik om over te nemen:</div>' +
+        gekozen.map(d => `<button type="button" class="btn btn-sm btn-outline-secondary me-1 mb-1" onclick="kiesDrempelChip('${d.id}')">${d.titel}</button>`).join('');
+    }
+    function kiesDrempelChip(id) {
+      const d = getDrempel(id); const inp = document.getElementById('d3u-drempel');
+      if (d && inp) { inp.value = d.titel; saveStap1(); valideerStap1(); }
+    }
+    function saveStap1() {
+      const u = ensureUitwerking();
+      u.drempel = d3val('d3u-drempel'); u.invloed = d3val('d3u-invloed'); u.situatie = d3val('d3u-situatie');
+      saveState();
+    }
+    function restoreStap1() {
+      const u = ensureUitwerking();
+      d3set('d3u-drempel', u.drempel); d3set('d3u-invloed', u.invloed); d3set('d3u-situatie', u.situatie);
+    }
+    function valideerStap1() {
+      const u = ensureUitwerking();
+      const ok = !!(u.drempel.trim() && u.invloed.trim() && u.situatie.trim());
+      d3gate('btn-d3u-stap1-next', ok, 'd3u-stap1-hint', 'Vul de drie velden in om verder te gaan.');
+      return ok;
+    }
+
+    // ----- Stap 2+3+4: plan (werkt op de actieve poging) -----
+    function initPlan() { ensureUitwerking(); renderPogingBadge('d3u-plan-poging'); restorePlan(); valideerPlan(); }
+    function savePlan() {
+      const p = huidigePoging();
+      p.strategie = d3val('d3u-strategie'); p.doel = d3val('d3u-doel');
+      p.stappen = d3val('d3u-stappen'); p.frequentie = d3val('d3u-frequentie');
+      p.moeilijk = d3val('d3u-moeilijk'); p.hulpbron = d3val('d3u-hulpbron');
+      saveState();
+    }
+    function onPlanInput() { savePlan(); valideerPlan(); }
+    function restorePlan() {
+      const p = huidigePoging();
+      d3set('d3u-strategie', p.strategie); d3set('d3u-doel', p.doel);
+      d3set('d3u-stappen', p.stappen); d3set('d3u-frequentie', p.frequentie);
+      d3set('d3u-moeilijk', p.moeilijk); d3set('d3u-hulpbron', p.hulpbron);
+      restoreHaalbaar();
+    }
+    function onHaalbaarInput() {
+      const s = document.getElementById('schaal-haalbaar'); if (!s) return;
+      const v = parseInt(s.value, 10);
+      const bol = document.getElementById('schaal-haalbaar-bol');
+      if (bol) { bol.textContent = v; bol.style.backgroundColor = schaalKleur(v); }
+      const wrap = document.querySelector('.schaal-haalbaar-wrap'); if (wrap) wrap.classList.remove('schaal-niet-ingesteld');
+      s.dataset.touched = 'true';
+      huidigePoging().haalbaar = v; saveState(); valideerPlan();
+    }
+    function restoreHaalbaar() {
+      const p = huidigePoging();
+      const s = document.getElementById('schaal-haalbaar');
+      const bol = document.getElementById('schaal-haalbaar-bol');
+      const wrap = document.querySelector('.schaal-haalbaar-wrap');
+      if (!s) return;
+      if (p.haalbaar) {
+        s.value = p.haalbaar; s.dataset.touched = 'true';
+        if (bol) { bol.textContent = p.haalbaar; bol.style.backgroundColor = schaalKleur(p.haalbaar); }
+        if (wrap) wrap.classList.remove('schaal-niet-ingesteld');
+      } else {
+        s.value = 5; s.dataset.touched = 'false';
+        if (bol) bol.textContent = '–';
+        if (wrap) wrap.classList.add('schaal-niet-ingesteld');
+      }
+    }
+    function valideerPlan() {
+      const p = huidigePoging();
+      const ok = !!(p.strategie.trim() && p.doel.trim() && p.stappen.trim() && p.frequentie.trim() && p.haalbaar && p.moeilijk.trim() && p.hulpbron.trim());
+      d3gate('btn-d3u-plan-next', ok, 'd3u-plan-hint', 'Vul alle velden in, inclusief de haalbaarheidsscore.');
+      return ok;
+    }
+
+    // ----- Stap 5: evaluatie na drie weken -----
+    function initEval() { ensureUitwerking(); renderPogingBadge('d3u-eval-poging'); renderPogingHistoriek(); restoreEval(); onEvalChange(); }
+    function renderPogingHistoriek() {
+      const el = document.getElementById('d3u-poging-historiek'); if (!el) return;
+      const u = ensureUitwerking();
+      if (u.pogingen.length <= 1) { el.innerHTML = ''; return; }
+      el.innerHTML = '<div class="small text-muted">Eerdere pogingen met dezelfde drempel: ' +
+        u.pogingen.map((p, i) => `<span class="badge bg-light text-secondary border me-1">Poging ${i + 1}${i === u.actief ? ' (nu)' : ''}</span>`).join('') + '</div>';
+    }
+    function saveEval() {
+      const e = huidigePoging().evaluatie || {};
+      e.concreet = d3radio('d3u-concreet'); e.klein = d3radio('d3u-klein');
+      e.ingepland = d3radio('d3u-ingepland'); e.helpt = d3radio('d3u-helpt');
+      e.doorgaan = d3radio('d3u-doorgaan');
+      e.datum = d3val('d3u-eval-datum'); e.opmerking = d3val('d3u-eval-opmerking');
+      huidigePoging().evaluatie = e; saveState();
+    }
+    function restoreEval() {
+      const e = huidigePoging().evaluatie || {};
+      d3setRadio('d3u-concreet', e.concreet); d3setRadio('d3u-klein', e.klein);
+      d3setRadio('d3u-ingepland', e.ingepland); d3setRadio('d3u-helpt', e.helpt);
+      d3setRadio('d3u-doorgaan', e.doorgaan);
+      d3set('d3u-eval-datum', e.datum); d3set('d3u-eval-opmerking', e.opmerking);
+    }
+    function onEvalChange() {
+      saveEval();
+      const e = huidigePoging().evaluatie || {};
+      const beantwoord = e.concreet && e.klein && e.ingepland && e.helpt && e.doorgaan && (e.datum && e.datum.trim());
+      const afrondBox = document.getElementById('d3u-eval-afronden');
+      const aanpasBox = document.getElementById('d3u-eval-aanpassen');
+      const hint = document.getElementById('d3u-eval-hint');
+      if (afrondBox) afrondBox.style.display = 'none';
+      if (aanpasBox) aanpasBox.style.display = 'none';
+      if (!beantwoord) {
+        if (hint) { hint.style.display = 'block'; hint.textContent = 'Beantwoord de vijf vragen en vul de datum in.'; }
+        return;
+      }
+      if (hint) hint.style.display = 'none';
+      if (e.doorgaan === 'ja' && afrondBox) afrondBox.style.display = 'block';
+      else if (e.doorgaan === 'nee-aanpassen' && aanpasBox) aanpasBox.style.display = 'block';
+    }
+    // "Ik pas aan": bewaar deze poging, start een nieuwe met dezelfde drempel, terug naar Stap 2
+    function nieuwePoging() {
+      const u = ensureUitwerking();
+      saveEval();
+      u.pogingen.push(legePoging());
+      u.actief = u.pogingen.length - 1;
+      saveState();
+      goToPage('page-deel3-uitwerken-plan');
+      setTimeout(() => showMascot('Goed dat je bijstuurt! Je drempel blijft dezelfde — kies nu een andere strategie en werk ze uit.', 7000, 'encourage'), 300);
+    }
+
+    // ----- Tussentijdse PDF (na Stap 4, vóór de 3 weken) -----
+    async function genereerTussentijdsePDF() {
+      const statusEl = document.getElementById('d3u-tussentijds-status');
+      if (statusEl) statusEl.innerHTML = '<div class="text-muted small"><i class="bi bi-hourglass-split me-1"></i>PDF wordt gegenereerd…</div>';
+      try {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ unit:'mm', format:'a4' });
+        let y = pdfHoofdtitel(doc, 0, 'Deel 3 — Mijn strategie (tussentijds)');
+        y = pdfCursistGegevens(doc, y);
+        const u = ensureUitwerking(); const p = huidigePoging();
+        y = pdfSectionHeader(doc, 'Stap 1 — Mijn drempel', y);
+        y = pdfVraagAntwoord(doc, 'Welke drempel kies ik?', u.drempel, y);
+        y = pdfVraagAntwoord(doc, 'Welke invloed heeft die op mijn leren?', u.invloed, y);
+        y = pdfVraagAntwoord(doc, 'In welk vak of welke situatie ervaar ik die het meest?', u.situatie, y);
+        y = pdfSectionHeader(doc, 'Stap 2 — Mijn strategie', y);
+        y = pdfVraagAntwoord(doc, 'Welke strategie kies ik?', p.strategie, y);
+        y = pdfVraagAntwoord(doc, 'Wat wil ik ermee bereiken?', p.doel, y);
+        y = pdfSectionHeader(doc, 'Stap 3 — Mijn plan', y);
+        y = pdfVraagAntwoord(doc, 'In kleine stappen', p.stappen, y);
+        y = pdfVraagAntwoord(doc, 'Hoe vaak en wanneer', p.frequentie, y);
+        y = pdfVraagAntwoord(doc, 'Hoe haalbaar (1–10)', (p.haalbaar != null ? p.haalbaar + '/10' : '—'), y);
+        y = pdfSectionHeader(doc, 'Stap 4 — Wat als het moeilijk wordt?', y);
+        y = pdfVraagAntwoord(doc, 'Wat kan het moeilijk maken?', p.moeilijk, y);
+        y = pdfVraagAntwoord(doc, 'Wat doe ik dan / welke hulpbron?', p.hulpbron, y);
+        pdfFooters(doc);
+        const c = appState.cursist || {};
+        const bestand = `Deel3_Strategie_tussentijds_${(c.achternaam||'cursist').replace(/\s+/g,'')}_${(c.voornaam||'').replace(/\s+/g,'')}.pdf`;
+        downloadPDF(doc, bestand, 'd3u-tussentijds-status');
+      } catch (err) {
+        console.error(err);
+        if (statusEl) statusEl.innerHTML = '<div class="alert alert-danger py-2 mb-0"><i class="bi bi-x-circle-fill me-2"></i>Er ging iets mis bij de PDF-generatie. Probeer opnieuw.</div>';
+      }
+    }
+
+    // ----- Volledige Deel 3-PDF (afsluiting) -----
+    async function genereerDeel3PDF() {
+      const statusEl = document.getElementById('pdf-deel3-status');
+      if (statusEl) statusEl.innerHTML = '<div class="text-muted small"><i class="bi bi-hourglass-split me-1"></i>PDF wordt gegenereerd…</div>';
+      try {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ unit:'mm', format:'a4' });
+        let y = pdfHoofdtitel(doc, 0, 'Deel 3 — Strategieën');
+        y = pdfCursistGegevens(doc, y);
+
+        ensureDeel3State();
+        const data = appState.deel3.strategie32A || {};
+
+        // 3.2.A — gekozen strategieën per drempel
+        y = pdfSectionHeader(doc, '3.2.A  Strategieën per drempel', y);
+        const gekozenDrempels = DREMPEL_STRATEGIEEN.filter(d => drempelHeeftStrategie(d.id));
+        if (!gekozenDrempels.length) {
+          y = pdfText(doc, '(nog geen drempels aangeduid)', 20, y, { color: PDF_MUTED, style: 'italic' });
+        }
+        gekozenDrempels.forEach(d => {
+          const st = data[d.id] || {};
+          y = pdfSubHeader(doc, d.titel, y);
+          (st.strategieen || []).forEach(i => {
+            const tekst = (d.strategieen[i] || '').replace(/<[^>]+>/g, '');
+            y = pdfText(doc, '• ' + tekst, 24, y, { size: 9 });
+          });
+          if (st.eigen && st.eigen.trim()) y = pdfText(doc, '• Eigen strategie: ' + st.eigen, 24, y, { size: 9 });
+          y = pdfText(doc, 'Sterkst: ' + (st.sterkst || '—'), 24, y, { size: 9, color: PDF_MUTED });
+          y = pdfText(doc, 'Gebruik: ' + (st.gebruik || '—'), 24, y, { size: 9, color: PDF_MUTED });
+          y = pdfText(doc, 'Niet: ' + (st.niet || '—'), 24, y, { size: 9, color: PDF_MUTED });
+          y += 2;
+        });
+
+        // 3.3 — uitgewerkte strategie (met alle pogingen)
+        const u = ensureUitwerking();
+        y = pdfSectionHeader(doc, '3.3  Mijn uitgewerkte strategie', y);
+        y = pdfVraagAntwoord(doc, 'Stap 1 — Mijn drempel', u.drempel || '—', y);
+        y = pdfVraagAntwoord(doc, 'Invloed op mijn leren', u.invloed || '—', y);
+        y = pdfVraagAntwoord(doc, 'Vak of situatie', u.situatie || '—', y);
+
+        u.pogingen.forEach((p, i) => {
+          y = pdfNeedSpace(doc, y, 30);
+          y = pdfSubHeader(doc, 'Poging ' + (i + 1), y);
+          y = pdfText(doc, 'Strategie: ' + (p.strategie || '—'), 24, y, { size: 9 });
+          y = pdfText(doc, 'Doel: ' + (p.doel || '—'), 24, y, { size: 9 });
+          y = pdfText(doc, 'Stappen: ' + (p.stappen || '—'), 24, y, { size: 9 });
+          y = pdfText(doc, 'Hoe vaak / wanneer: ' + (p.frequentie || '—'), 24, y, { size: 9 });
+          y = pdfText(doc, 'Haalbaarheid: ' + (p.haalbaar != null ? p.haalbaar + '/10' : '—'), 24, y, { size: 9 });
+          y = pdfText(doc, 'Mogelijke moeilijkheid: ' + (p.moeilijk || '—'), 24, y, { size: 9 });
+          y = pdfText(doc, 'Hulpbron: ' + (p.hulpbron || '—'), 24, y, { size: 9 });
+          const e = p.evaluatie || {};
+          const ja = v => v === 'ja' ? 'Ja' : (v === 'nee' ? 'Nee' : (v === 'nee-aanpassen' ? 'Nee / aangepast' : '—'));
+          if (e.concreet || e.doorgaan || e.datum) {
+            y = pdfText(doc, 'Evaluatie' + (e.datum ? ' (' + e.datum + ')' : '') + ':', 24, y, { size: 9, style: 'bold' });
+            y = pdfText(doc, '— Concreet genoeg? ' + ja(e.concreet) + '   · Klein/haalbaar? ' + ja(e.klein), 26, y, { size: 9, color: PDF_MUTED });
+            y = pdfText(doc, '— Ingepland? ' + ja(e.ingepland) + '   · Helpt richting doel? ' + ja(e.helpt), 26, y, { size: 9, color: PDF_MUTED });
+            y = pdfText(doc, '— Doorgaan? ' + ja(e.doorgaan), 26, y, { size: 9, color: PDF_MUTED });
+            if (e.opmerking) y = pdfText(doc, '— Opmerking: ' + e.opmerking, 26, y, { size: 9, color: PDF_MUTED });
+          }
+          y += 2;
+        });
+
+        pdfFooters(doc);
+        const c = appState.cursist || {};
+        const bestand = `Deel3_Strategieen_${(c.achternaam||'cursist').replace(/\s+/g,'')}_${(c.voornaam||'').replace(/\s+/g,'')}.pdf`;
+        downloadPDF(doc, bestand, 'pdf-deel3-status');
+      } catch (err) {
+        console.error(err);
+        if (statusEl) statusEl.innerHTML = '<div class="alert alert-danger py-2 mb-0"><i class="bi bi-x-circle-fill me-2"></i>Er ging iets mis bij de PDF-generatie. Probeer opnieuw.</div>';
+      }
+    }
 
     const PDF_KLEUR = [0, 154, 155];           // var(--groeipunt) als RGB
     const PDF_KLEUR_DARK = [0, 118, 119];
