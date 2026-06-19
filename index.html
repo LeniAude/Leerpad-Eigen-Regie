@@ -363,6 +363,40 @@
     .d3-chk.aan { background:var(--groeipunt); border-color:var(--groeipunt); }
     .d3-car { color:#adb5bd; font-size:1.1rem; margin-top:2px; }
 
+    /* ====== Deel 4 — POP ====== */
+    .paspoort {
+      border:2px solid var(--groeipunt); border-radius:14px; overflow:hidden;
+      background:#fff; box-shadow:0 4px 16px rgba(0,154,155,.12);
+    }
+    .paspoort-kop {
+      background:var(--groeipunt); color:#fff; padding:.6rem 1rem;
+      display:flex; align-items:center; gap:.5rem; letter-spacing:.06em; text-transform:uppercase; font-size:.8rem;
+    }
+    .paspoort-body { display:flex; gap:1rem; padding:1.1rem; align-items:flex-start; }
+    .paspoort-foto {
+      flex:none; width:84px; height:104px; border-radius:8px; border:1px dashed #b9d9d9;
+      background:#e6f5f5; display:flex; align-items:center; justify-content:center; color:var(--groeipunt);
+    }
+    .paspoort-rij { display:flex; flex-direction:column; gap:.1rem; margin-bottom:.6rem; }
+    .paspoort-rij label { font-size:.72rem; letter-spacing:.05em; text-transform:uppercase; color:#6c757d; }
+    .paspoort-rij input { border:none; border-bottom:1.5px solid #cfe4e4; border-radius:0; padding:.15rem .1rem; font-weight:600; background:transparent; }
+    .paspoort-rij input:focus { outline:none; border-bottom-color:var(--groeipunt); box-shadow:none; }
+
+    .ijsberg-fig { max-width:320px; width:100%; }
+    .pop-voorbeeld summary { cursor:pointer; color:var(--groeipunt); font-size:.85rem; list-style:none; }
+    .pop-voorbeeld summary::-webkit-details-marker { display:none; }
+    .pop-voorbeeld summary::before { content:"\F4FE"; font-family:"bootstrap-icons"; margin-right:.35rem; }
+    .pop-voorbeeld[open] summary::before { content:"\F2E6"; }
+    .pop-voorbeeld .vb { font-size:.85rem; border-left:3px solid #e6f5f5; padding-left:.7rem; margin-top:.4rem; }
+
+    /* Eindanimatie */
+    #eind-overlay { position:fixed; inset:0; z-index:99999; pointer-events:none; overflow:hidden; }
+    #eind-confetti { position:absolute; inset:0; width:100%; height:100%; }
+    #eind-figuur { position:absolute; font-size:3.4rem; line-height:1; transform:translate(-50%,-50%); filter:drop-shadow(0 2px 6px rgba(0,0,0,.2)); z-index:2; }
+    #eind-popup { position:absolute; top:50%; left:50%; transform:translate(-50%,-46%) scale(.85); opacity:0; transition:opacity .5s ease, transform .5s ease; z-index:3; width:min(90%,420px); }
+    #eind-popup.toon { opacity:1; transform:translate(-50%,-50%) scale(1); }
+    #eind-popup .eind-popup-inner { background:#fff; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.22); padding:1.6rem 1.4rem; text-align:center; font-weight:600; }
+
     /* ====== Uitbreidingsoefening ====== */
     .uitbreiding-banner {
       background: linear-gradient(135deg, #6f42c1 0%, #9b5de5 100%);
@@ -4190,6 +4224,342 @@
     </div>
   </div>
 
+  <!-- ============================================================ -->
+  <!-- DEEL 4 — INTRO                                               -->
+  <!-- ============================================================ -->
+  <div id="page-deel4-intro" class="page">
+    <div class="progress-wrapper">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-1">
+        <span class="fw-bold progress-titel">Deel 4 — Jouw POP</span>
+        <button type="button" class="btn btn-link btn-sm p-0 text-muted" style="text-decoration:none;" onclick="openBalkStijlModal()" title="Wijzig de stijl van je voortgangsbalk"><i class="bi bi-palette-fill"></i></button>
+      </div>
+      <div class="progress" style="height: 10px;"><div class="progress-bar" role="progressbar" style="width: 0%;"></div></div>
+    </div>
+  </div>
+
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body p-4 p-md-5">
+              <p class="text-muted mb-1">Hallo <span class="welcome-name fw-bold"></span>,</p>
+              <h1 class="h2 mb-3">Deel 4 — Jouw POP</h1>
+              <p class="lead">Jouw <strong>Persoonlijk OntwikkelingsPlan (POP)</strong> brengt alles samen. Je dacht na over je motivatie, je interesses en energie, je talenten, je drempels en je strategie. Nu schrijf je dat samen in één plan dat je kunt bijhouden en bespreken met je leertrajectcoach.</p>
+
+              <p class="mt-4 mb-2">Dit deel bestaat uit <strong>3 onderdelen</strong> en een afronding.</p>
+              <div class="list-group mb-3">
+                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel4-identiteit')">
+                  <span class="badge rounded-pill me-3" style="background-color:var(--groeipunt);">1</span>
+                  <span class="flex-grow-1"><strong>Wie ben jij?</strong> <span class="text-muted small">— jouw identiteitskaart</span></span>
+                  <i class="bi bi-chevron-right text-muted"></i>
+                </button>
+                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel4-ijsberg-onder')">
+                  <span class="badge rounded-pill me-3" style="background-color:var(--groeipunt);">2</span>
+                  <span class="flex-grow-1"><strong>Onder de ijsberg</strong> <span class="text-muted small">— jouw binnenste</span></span>
+                  <i class="bi bi-chevron-right text-muted"></i>
+                </button>
+                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel4-ijsberg-boven')">
+                  <span class="badge rounded-pill me-3" style="background-color:var(--groeipunt);">3</span>
+                  <span class="flex-grow-1"><strong>Boven de ijsberg</strong> <span class="text-muted small">— jouw plan</span></span>
+                  <i class="bi bi-chevron-right text-muted"></i>
+                </button>
+                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel4-afsluiting')" style="background-color:#f8f9fa;">
+                  <span class="badge rounded-pill me-3 bg-success"><i class="bi bi-file-earmark-pdf"></i></span>
+                  <span class="flex-grow-1"><strong>Afronding</strong> <span class="text-muted small">— PDF van je POP genereren</span></span>
+                  <i class="bi bi-chevron-right text-muted"></i>
+                </button>
+              </div>
+
+              <div class="d-flex justify-content-between mt-4">
+                <button class="btn btn-outline-secondary" onclick="goToPage('page-overzicht')"><i class="bi bi-grid me-2"></i>Alle delen</button>
+                <button class="btn btn-groeipunt" onclick="goToPage('page-deel4-identiteit')">Start vanaf het begin <i class="bi bi-arrow-right ms-2"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- DEEL 4 — 4.1 WIE BEN JIJ? (identiteitskaart)                 -->
+  <!-- ============================================================ -->
+  <div id="page-deel4-identiteit" class="page">
+    <div class="progress-wrapper">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-1">
+        <span class="fw-bold progress-titel">Deel 4 — Jouw POP</span>
+        <button type="button" class="btn btn-link btn-sm p-0 text-muted" style="text-decoration:none;" onclick="openBalkStijlModal()" title="Wijzig de stijl van je voortgangsbalk"><i class="bi bi-palette-fill"></i></button>
+      </div>
+      <div class="progress" style="height: 10px;"><div class="progress-bar" role="progressbar" style="width: 0%;"></div></div>
+    </div>
+  </div>
+
+    <div class="container py-4">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="mb-3"><span class="badge" style="background-color:var(--groeipunt);">4.1</span><h1 class="h4 mt-2 mb-0">Wie ben jij?</h1></div>
+          <p class="small text-muted">Vul je identiteitskaart in. Dit is het paspoort van jouw leertraject.</p>
+
+          <div class="paspoort mb-3">
+            <div class="paspoort-kop"><i class="bi bi-person-vcard"></i> Leerpaspoort · Regie over eigen leren</div>
+            <div class="paspoort-body">
+              <div class="paspoort-foto"><i class="bi bi-person-fill" style="font-size:2.2rem;"></i></div>
+              <div class="flex-grow-1">
+                <div class="paspoort-rij"><label for="d4-id-naam">Naam</label><input id="d4-id-naam" type="text" oninput="onIdentiteitInput()"></div>
+                <div class="paspoort-rij"><label for="d4-id-leeftijd">Leeftijd</label><input id="d4-id-leeftijd" type="text" oninput="onIdentiteitInput()"></div>
+                <div class="paspoort-rij"><label for="d4-id-aav">Opleiding AAV</label><input id="d4-id-aav" type="text" oninput="onIdentiteitInput()"></div>
+                <div class="paspoort-rij mb-0"><label for="d4-id-beroep">Beroepsgerichte opleiding <span class="text-muted" style="text-transform:none;">(indien van toepassing)</span></label><input id="d4-id-beroep" type="text" oninput="onIdentiteitInput()"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-outline-secondary" onclick="goToPage('page-deel4-intro')"><i class="bi bi-arrow-left me-2"></i>Terug</button>
+            <button class="btn btn-groeipunt" id="btn-d4-identiteit-next" disabled onclick="goToPage('page-deel4-ijsberg-onder')">Volgende <i class="bi bi-arrow-right ms-2"></i></button>
+          </div>
+          <div id="d4-identiteit-hint" class="small text-muted text-end mt-2">Vul minstens je naam, leeftijd en AAV-opleiding in.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- DEEL 4 — 4.2 ONDER DE IJSBERG                                -->
+  <!-- ============================================================ -->
+  <div id="page-deel4-ijsberg-onder" class="page">
+    <div class="progress-wrapper">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-1">
+        <span class="fw-bold progress-titel">Deel 4 — Jouw POP</span>
+        <button type="button" class="btn btn-link btn-sm p-0 text-muted" style="text-decoration:none;" onclick="openBalkStijlModal()" title="Wijzig de stijl van je voortgangsbalk"><i class="bi bi-palette-fill"></i></button>
+      </div>
+      <div class="progress" style="height: 10px;"><div class="progress-bar" role="progressbar" style="width: 0%;"></div></div>
+    </div>
+  </div>
+
+    <div class="container py-4">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="mb-3"><span class="badge" style="background-color:var(--groeipunt);">4.2</span><h1 class="h4 mt-2 mb-0">Onder de ijsberg — jouw binnenste</h1></div>
+
+          <div class="text-center mb-3">
+            <img src="https://leniaude.github.io/Leerpad-Eigen-Regie/images/iceberg.jpg" alt="IJsberg: het zichtbare deel boven water en het grote deel eronder" class="ijsberg-fig rounded shadow-sm" onerror="this.style.display='none'">
+          </div>
+          <p class="small text-muted">Dit zijn de dingen die je niet meteen ziet, maar die jou als lerende vormen. Vul de vragen in en laat je inspireren door de oefeningen uit dit leerpad. Je POP is een handleiding voor jou én je leerkrachten om samen je doel te bereiken. Onder elke vraag vind je een goed en een minder goed voorbeeld.</p>
+
+          <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+              <label class="form-label fw-semibold" for="d4-onder-motivatie">Wat is mijn motivatie om deze opleiding te doen?</label>
+              <textarea class="form-control" id="d4-onder-motivatie" rows="3" oninput="onOnderInput()"></textarea>
+              <details class="pop-voorbeeld mt-1 mb-4"><summary>Goed en minder goed voorbeeld</summary>
+                <div class="vb"><span class="text-success fw-semibold">Goed:</span> “Ik wil mijn diploma secundair behalen zodat ik kan starten met de opleiding verpleegkunde. Dat is al lang mijn droom.”<br><span class="text-danger fw-semibold">Minder goed:</span> “Ik moet het gewoon doen.” <span class="text-muted">(te vaag, geen eigen drijfveer)</span></div>
+              </details>
+
+              <label class="form-label fw-semibold" for="d4-onder-energie">Wat geeft mij energie als ik aan het studeren ben?</label>
+              <textarea class="form-control" id="d4-onder-energie" rows="3" oninput="onOnderInput()"></textarea>
+              <details class="pop-voorbeeld mt-1 mb-4"><summary>Goed en minder goed voorbeeld</summary>
+                <div class="vb"><span class="text-success fw-semibold">Goed:</span> “Ik krijg energie als ik in korte blokken werk en daarna iets kan afvinken. Samen studeren met een medecursist werkt ook motiverend.”<br><span class="text-danger fw-semibold">Minder goed:</span> “Niets, studeren is gewoon saai.” <span class="text-muted">(benoemt geen energiebron)</span></div>
+              </details>
+
+              <label class="form-label fw-semibold" for="d4-onder-interesses">Wat zijn mijn interesses?</label>
+              <textarea class="form-control" id="d4-onder-interesses" rows="3" oninput="onOnderInput()"></textarea>
+              <details class="pop-voorbeeld mt-1 mb-4"><summary>Goed en minder goed voorbeeld</summary>
+                <div class="vb"><span class="text-success fw-semibold">Goed:</span> “Ik ben geboeid door alles wat met gezondheid en zorg te maken heeft, en ik lees graag over voeding.”<br><span class="text-danger fw-semibold">Minder goed:</span> “Van alles een beetje.” <span class="text-muted">(te algemeen om iets mee te doen)</span></div>
+              </details>
+
+              <label class="form-label fw-semibold" for="d4-onder-talenten">Wat zijn mijn talenten?</label>
+              <div class="small text-muted mb-1">Laat je zeker inspireren door je talenteninterview uit Deel 1!</div>
+              <textarea class="form-control" id="d4-onder-talenten" rows="3" oninput="onOnderInput()"></textarea>
+              <details class="pop-voorbeeld mt-1 mb-4"><summary>Goed en minder goed voorbeeld</summary>
+                <div class="vb"><span class="text-success fw-semibold">Goed:</span> “Ik ben een doorzetter en luister goed naar anderen (sociaal talent). In groep neem ik vaak een verbindende rol op.”<br><span class="text-danger fw-semibold">Minder goed:</span> “Ik heb geen talenten.” <span class="text-muted">(iedereen heeft talenten — kijk naar je talenteninterview)</span></div>
+              </details>
+
+              <label class="form-label fw-semibold" for="d4-onder-zelfbeeld">Hoe kijk ik naar mezelf als lerende?</label>
+              <div class="small text-muted mb-1">Schrijf 2 à 3 stellingen die bij jou passen.</div>
+              <textarea class="form-control" id="d4-onder-zelfbeeld" rows="3" oninput="onOnderInput()"></textarea>
+              <details class="pop-voorbeeld mt-1 mb-4"><summary>Goed en minder goed voorbeeld</summary>
+                <div class="vb"><span class="text-success fw-semibold">Goed:</span> “Ik leer het best stap voor stap. Ik heb tijd nodig om iets te begrijpen, maar als ik het snap, onthoud ik het goed.”<br><span class="text-danger fw-semibold">Minder goed:</span> “Ik ben gewoon dom.” <span class="text-muted">(geen stelling over hóé je leert, en te hard voor jezelf)</span></div>
+              </details>
+
+              <label class="form-label fw-semibold" for="d4-onder-drempels">Welke drempels zie ik voor mezelf in het leren?</label>
+              <textarea class="form-control" id="d4-onder-drempels" rows="3" oninput="onOnderInput()"></textarea>
+              <details class="pop-voorbeeld mt-1 mb-0"><summary>Goed en minder goed voorbeeld</summary>
+                <div class="vb"><span class="text-success fw-semibold">Goed:</span> “Ik stel taken uit tot vlak voor de deadline, waardoor ik onder stress werk. Ook plannen vind ik moeilijk.”<br><span class="text-danger fw-semibold">Minder goed:</span> “Geen.” <span class="text-muted">(bijna iedereen heeft drempels — kijk naar Deel 2)</span></div>
+              </details>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-outline-secondary" onclick="goToPage('page-deel4-identiteit')"><i class="bi bi-arrow-left me-2"></i>Terug</button>
+            <button class="btn btn-groeipunt" id="btn-d4-onder-next" disabled onclick="goToPage('page-deel4-ijsberg-boven')">Volgende <i class="bi bi-arrow-right ms-2"></i></button>
+          </div>
+          <div id="d4-onder-hint" class="small text-muted text-end mt-2">Beantwoord alle vragen om verder te gaan.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- DEEL 4 — 4.3 BOVEN DE IJSBERG                                -->
+  <!-- ============================================================ -->
+  <div id="page-deel4-ijsberg-boven" class="page">
+    <div class="progress-wrapper">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-1">
+        <span class="fw-bold progress-titel">Deel 4 — Jouw POP</span>
+        <button type="button" class="btn btn-link btn-sm p-0 text-muted" style="text-decoration:none;" onclick="openBalkStijlModal()" title="Wijzig de stijl van je voortgangsbalk"><i class="bi bi-palette-fill"></i></button>
+      </div>
+      <div class="progress" style="height: 10px;"><div class="progress-bar" role="progressbar" style="width: 0%;"></div></div>
+    </div>
+  </div>
+
+    <div class="container py-4">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="mb-3"><span class="badge" style="background-color:var(--groeipunt);">4.3</span><h1 class="h4 mt-2 mb-0">Boven de ijsberg — jouw plan</h1></div>
+          <p class="small text-muted">Dit is wat zichtbaar wordt: jouw aanpak. Bouw verder op de strategie die je in Deel 3 uitwerkte.</p>
+
+          <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+              <label class="form-label fw-semibold" for="d4-boven-strategie">Welke strategie heb ik uitgekozen?</label>
+              <textarea class="form-control mb-4" id="d4-boven-strategie" rows="3" oninput="onBovenInput()"></textarea>
+
+              <label class="form-label fw-semibold" for="d4-boven-concreet">Hoe heb ik deze strategie concreet gemaakt?</label>
+              <div class="small text-muted mb-1">Wanneer? Hoe vaak? Wat precies?</div>
+              <textarea class="form-control mb-4" id="d4-boven-concreet" rows="3" oninput="onBovenInput()"></textarea>
+
+              <label class="form-label fw-semibold" for="d4-boven-hulpbronnen">Welke hulpbronnen gebruik ik?</label>
+              <div class="small text-muted mb-1">Personen, tools, plekken…</div>
+              <textarea class="form-control mb-4" id="d4-boven-hulpbronnen" rows="3" oninput="onBovenInput()"></textarea>
+
+              <label class="form-label fw-semibold" for="d4-boven-opvolgen">Hoe volg ik mijn strategie op?</label>
+              <textarea class="form-control mb-4" id="d4-boven-opvolgen" rows="3" oninput="onBovenInput()"></textarea>
+
+              <label class="form-label fw-semibold" for="d4-boven-evalueren">Hoe evalueer ik of mijn strategie werkt?</label>
+              <textarea class="form-control" id="d4-boven-evalueren" rows="3" oninput="onBovenInput()"></textarea>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-outline-secondary" onclick="goToPage('page-deel4-ijsberg-onder')"><i class="bi bi-arrow-left me-2"></i>Terug</button>
+            <button class="btn btn-groeipunt" id="btn-d4-boven-next" disabled onclick="goToPage('page-deel4-afsluiting')">Naar de afronding <i class="bi bi-arrow-right ms-2"></i></button>
+          </div>
+          <div id="d4-boven-hint" class="small text-muted text-end mt-2">Beantwoord alle vragen om verder te gaan.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- DEEL 4 — 4.4 AFSLUITING + ZORGFORMULIER                      -->
+  <!-- ============================================================ -->
+  <div id="page-deel4-afsluiting" class="page">
+    <div class="progress-wrapper">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-1">
+        <span class="fw-bold progress-titel">Deel 4 — Jouw POP</span>
+        <button type="button" class="btn btn-link btn-sm p-0 text-muted" style="text-decoration:none;" onclick="openBalkStijlModal()" title="Wijzig de stijl van je voortgangsbalk"><i class="bi bi-palette-fill"></i></button>
+      </div>
+      <div class="progress" style="height: 10px;"><div class="progress-bar" role="progressbar" style="width: 0%;"></div></div>
+    </div>
+  </div>
+
+    <div class="container py-4">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm text-center mb-3">
+            <div class="card-body p-4 p-md-5">
+              <i class="bi bi-trophy-fill" style="font-size:3rem;color:var(--groeipunt);"></i>
+              <h1 class="h3 mt-3">Goed gedaan! Je hebt jouw leerpad doorlopen.</h1>
+              <p class="lead text-muted">Dit POP is van jou. Je kunt het bijhouden en aanpassen. Bespreek het met je leertrajectcoach of breng het mee naar het Open Leercentrum.</p>
+              <div class="alert border-0 d-inline-flex align-items-center py-2" style="background-color:#e7f5f5;">
+                <i class="bi bi-lightbulb-fill me-2" style="color:var(--groeipunt);"></i>
+                <span class="small">Tip: het is niet erg als je strategie later wordt aangepast. Dat is slim leren!</span>
+              </div>
+              <div class="mt-3">
+                <button class="btn btn-groeipunt btn-lg" id="pdf-deel4-btn" onclick="genereerDeel4PDF()"><i class="bi bi-file-earmark-pdf me-2"></i>Genereer PDF van je POP</button>
+                <a href="https://moodle.groeipunt.be/mod/assign/view.php?id=2257047&forceview=1" target="_blank" rel="noopener" class="btn btn-success btn-lg ms-2"><i class="bi bi-cloud-upload me-2"></i>Upload op Moodle <i class="bi bi-box-arrow-up-right ms-1"></i></a>
+              </div>
+              <div id="pdf-deel4-status" class="mt-3"></div>
+            </div>
+          </div>
+
+          <!-- Zorg-contactformulier -->
+          <div class="card border-0 shadow-sm" id="zorg-form-card">
+            <div class="card-body p-4">
+              <h2 class="h5 mb-1"><i class="bi bi-chat-heart me-2" style="color:var(--groeipunt);"></i>Contact met een zorgmedewerker?</h2>
+              <p class="small text-muted">Wil je dat een zorgmedewerker contact met je opneemt? Vul dit formuliertje in, dan word je zo snel mogelijk gecontacteerd. Je mag het ook overslaan.</p>
+
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label small mb-1" for="zorg-naam">Naam</label>
+                  <input type="text" class="form-control" id="zorg-naam">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small mb-1" for="zorg-campus">Ingeschreven op campus</label>
+                  <select class="form-select" id="zorg-campus">
+                    <option value="Eeklo">Eeklo</option>
+                    <option value="Gent">Gent</option>
+                    <option value="Lokeren">Lokeren</option>
+                    <option value="Ninove">Ninove</option>
+                    <option value="Sint-Amandsberg">Sint-Amandsberg</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="mt-3">
+                <div class="small fw-semibold mb-1">Ik wens contact met:</div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" id="zorg-met-leercoach"><label class="form-check-label small" for="zorg-met-leercoach">Leercoach (brede basiszorg)</label></div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" id="zorg-met-vz"><label class="form-check-label small" for="zorg-met-vz">Verhoogde zorg</label></div>
+              </div>
+
+              <div class="mt-3">
+                <div class="small fw-semibold mb-1">Hoe wil je dat de zorgmedewerker(s) contact opnemen?</div>
+                <div class="form-check"><input class="form-check-input zorg-hoe" type="checkbox" value="mail" id="zorg-hoe-mail"><label class="form-check-label small" for="zorg-hoe-mail">Via mail</label></div>
+                <div class="form-check"><input class="form-check-input zorg-hoe" type="checkbox" value="bellen" id="zorg-hoe-bellen" onchange="zorgGsmToggle()"><label class="form-check-label small" for="zorg-hoe-bellen">Bellen</label></div>
+                <div class="form-check"><input class="form-check-input zorg-hoe" type="checkbox" value="afspraak op campus" id="zorg-hoe-campus"><label class="form-check-label small" for="zorg-hoe-campus">Afspraak op campus</label></div>
+                <div class="form-check"><input class="form-check-input zorg-hoe" type="checkbox" value="afspraak via videomeeting" id="zorg-hoe-video"><label class="form-check-label small" for="zorg-hoe-video">Afspraak via videomeeting</label></div>
+              </div>
+
+              <div class="row g-3 mt-1">
+                <div class="col-md-6">
+                  <label class="form-label small mb-1" for="zorg-mail">Mailadres</label>
+                  <input type="email" class="form-control" id="zorg-mail">
+                </div>
+                <div class="col-md-6" id="zorg-gsm-wrap">
+                  <label class="form-label small mb-1" for="zorg-gsm">Gsm-nummer <span class="zorg-gsm-verplicht text-danger" style="display:none;">(verplicht)</span></label>
+                  <input type="tel" class="form-control" id="zorg-gsm" placeholder="Optioneel">
+                </div>
+              </div>
+
+              <div class="mt-3">
+                <label class="form-label small mb-1" for="zorg-opmerking">Wil je nog iets meegeven? (optioneel)</label>
+                <textarea class="form-control" id="zorg-opmerking" rows="2"></textarea>
+              </div>
+
+              <div id="zorg-fout" class="alert alert-warning py-2 mt-3 mb-0" style="display:none;"></div>
+
+              <div class="d-flex justify-content-between mt-3">
+                <button class="btn btn-outline-secondary" onclick="slaZorgOver()">Sla over</button>
+                <button class="btn btn-groeipunt" onclick="verzendZorg()"><i class="bi bi-send me-2"></i>Verzend</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="zorg-bevestiging" class="alert alert-success" style="display:none;"></div>
+          <div id="eind-bericht-statisch" class="card border-0 shadow-sm text-center mt-3" style="display:none;background-color:#e7f5f5;font-weight:600;padding:1.4rem;"></div>
+
+          <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-outline-secondary" onclick="goToPage('page-deel4-ijsberg-boven')"><i class="bi bi-arrow-left me-2"></i>Vorige</button>
+            <button class="btn btn-outline-secondary" onclick="goToPage('page-overzicht')">Alle delen <i class="bi bi-grid ms-1"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Modal voor "Alinea uit de tekst" -->
   <div class="modal fade" id="alinea-modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -4427,8 +4797,14 @@
         'page-deel3-uitwerken-plan',
         'page-deel3-uitwerken-evaluatie',
         'page-deel3-afsluiting'
+      ],
+      4: [
+        'page-deel4-intro',
+        'page-deel4-identiteit',
+        'page-deel4-ijsberg-onder',
+        'page-deel4-ijsberg-boven',
+        'page-deel4-afsluiting'
       ]
-      // Deel 4 volgt later
     };
 
     function getDeelVoorPagina(pageId) {
@@ -4847,6 +5223,19 @@
       }
       if (pageId === 'page-deel3-uitwerken-evaluatie') {
         setTimeout(() => initEval(), 50);
+      }
+      // =========================  DEEL 4  =========================
+      if (pageId === 'page-deel4-identiteit') {
+        setTimeout(() => initIdentiteit(), 50);
+      }
+      if (pageId === 'page-deel4-ijsberg-onder') {
+        setTimeout(() => initOnder(), 50);
+      }
+      if (pageId === 'page-deel4-ijsberg-boven') {
+        setTimeout(() => initBoven(), 50);
+      }
+      if (pageId === 'page-deel4-afsluiting') {
+        setTimeout(() => initZorgformulier(), 50);
       }
     }
 
@@ -9116,6 +9505,317 @@
         console.error(err);
         if (statusEl) statusEl.innerHTML = '<div class="alert alert-danger py-2 mb-0"><i class="bi bi-x-circle-fill me-2"></i>Er ging iets mis bij de PDF-generatie. Probeer opnieuw.</div>';
       }
+    }
+
+    // =================================================================
+    //  DEEL 4 — JOUW POP (Persoonlijk OntwikkelingsPlan)
+    // =================================================================
+
+    function ensureDeel4State() {
+      if (!appState.deel4 || Array.isArray(appState.deel4)) appState.deel4 = {};
+      const d = appState.deel4;
+      if (!d.identiteit) d.identiteit = { naam:'', leeftijd:'', aav:'', beroep:'' };
+      if (!d.onder) d.onder = { motivatie:'', energie:'', interesses:'', talenten:'', zelfbeeld:'', drempels:'' };
+      if (!d.boven) d.boven = { strategie:'', concreet:'', hulpbronnen:'', opvolgen:'', evalueren:'' };
+      if (!d.zorg) d.zorg = { verzonden:false, overgeslagen:false };
+      return d;
+    }
+
+    // ----- 4.1 Identiteitskaart -----
+    function initIdentiteit() {
+      const d = ensureDeel4State();
+      const c = appState.cursist || {};
+      if (!d.identiteit.naam) d.identiteit.naam = [c.voornaam, c.achternaam].filter(Boolean).join(' ');
+      restoreIdentiteit(); valideerIdentiteit();
+    }
+    function saveIdentiteit() {
+      const d = ensureDeel4State();
+      d.identiteit.naam = d3val('d4-id-naam'); d.identiteit.leeftijd = d3val('d4-id-leeftijd');
+      d.identiteit.aav = d3val('d4-id-aav'); d.identiteit.beroep = d3val('d4-id-beroep');
+      saveState();
+    }
+    function restoreIdentiteit() {
+      const d = ensureDeel4State();
+      d3set('d4-id-naam', d.identiteit.naam); d3set('d4-id-leeftijd', d.identiteit.leeftijd);
+      d3set('d4-id-aav', d.identiteit.aav); d3set('d4-id-beroep', d.identiteit.beroep);
+    }
+    function onIdentiteitInput() { saveIdentiteit(); valideerIdentiteit(); }
+    function valideerIdentiteit() {
+      const d = ensureDeel4State().identiteit;
+      const ok = !!(d.naam.trim() && d.leeftijd.trim() && d.aav.trim());
+      d3gate('btn-d4-identiteit-next', ok, 'd4-identiteit-hint', 'Vul minstens je naam, leeftijd en AAV-opleiding in.');
+      return ok;
+    }
+
+    // ----- 4.2 Onder de ijsberg -----
+    const D4_ONDER_VELDEN = ['motivatie','energie','interesses','talenten','zelfbeeld','drempels'];
+    function initOnder() { ensureDeel4State(); restoreOnder(); valideerOnder(); }
+    function saveOnder() {
+      const o = ensureDeel4State().onder;
+      D4_ONDER_VELDEN.forEach(k => o[k] = d3val('d4-onder-' + k));
+      saveState();
+    }
+    function restoreOnder() {
+      const o = ensureDeel4State().onder;
+      D4_ONDER_VELDEN.forEach(k => d3set('d4-onder-' + k, o[k]));
+    }
+    function onOnderInput() { saveOnder(); valideerOnder(); }
+    function valideerOnder() {
+      const o = ensureDeel4State().onder;
+      const ok = D4_ONDER_VELDEN.every(k => (o[k] || '').trim());
+      d3gate('btn-d4-onder-next', ok, 'd4-onder-hint', 'Beantwoord alle vragen om verder te gaan.');
+      return ok;
+    }
+
+    // ----- 4.3 Boven de ijsberg -----
+    const D4_BOVEN_VELDEN = ['strategie','concreet','hulpbronnen','opvolgen','evalueren'];
+    function initBoven() { ensureDeel4State(); restoreBoven(); valideerBoven(); }
+    function saveBoven() {
+      const b = ensureDeel4State().boven;
+      D4_BOVEN_VELDEN.forEach(k => b[k] = d3val('d4-boven-' + k));
+      saveState();
+    }
+    function restoreBoven() {
+      const b = ensureDeel4State().boven;
+      D4_BOVEN_VELDEN.forEach(k => d3set('d4-boven-' + k, b[k]));
+    }
+    function onBovenInput() { saveBoven(); valideerBoven(); }
+    function valideerBoven() {
+      const b = ensureDeel4State().boven;
+      const ok = D4_BOVEN_VELDEN.every(k => (b[k] || '').trim());
+      d3gate('btn-d4-boven-next', ok, 'd4-boven-hint', 'Beantwoord alle vragen om verder te gaan.');
+      return ok;
+    }
+
+    // ----- 4.4 Zorg-contactformulier -----
+    function initZorgformulier() {
+      ensureDeel4State();
+      const c = appState.cursist || {};
+      const d = ensureDeel4State();
+      d3set('zorg-naam', d.identiteit.naam || [c.voornaam, c.achternaam].filter(Boolean).join(' '));
+      d3set('zorg-mail', c.email || '');
+      const sel = document.getElementById('zorg-campus');
+      if (sel && c.campus) sel.value = c.campus;
+      zorgGsmToggle();
+    }
+    function zorgGsmToggle() {
+      const bellen = document.getElementById('zorg-hoe-bellen');
+      const gsmWrap = document.getElementById('zorg-gsm-wrap');
+      const gsm = document.getElementById('zorg-gsm');
+      if (!bellen) return;
+      const verplicht = bellen.checked;
+      if (gsmWrap) gsmWrap.querySelector('.zorg-gsm-verplicht').style.display = verplicht ? 'inline' : 'none';
+      if (gsm) gsm.placeholder = verplicht ? 'Verplicht als je gebeld wil worden' : 'Optioneel';
+    }
+    function verzendZorg() {
+      const fout = document.getElementById('zorg-fout');
+      const naam = d3val('zorg-naam').trim();
+      const campus = d3val('zorg-campus');
+      const mail = d3val('zorg-mail').trim();
+      const gsm = d3val('zorg-gsm').trim();
+      const opmerking = d3val('zorg-opmerking').trim();
+      const wilLeercoach = document.getElementById('zorg-met-leercoach').checked;
+      const wilVz = document.getElementById('zorg-met-vz').checked;
+      const hoe = Array.from(document.querySelectorAll('.zorg-hoe:checked')).map(c => c.value);
+      const bellen = document.getElementById('zorg-hoe-bellen').checked;
+
+      let melding = '';
+      if (!wilLeercoach && !wilVz) melding = 'Duid aan met wie je contact wil (leercoach en/of verhoogde zorg).';
+      else if (!hoe.length) melding = 'Duid aan hoe je gecontacteerd wil worden.';
+      else if (!mail) melding = 'Vul je mailadres in.';
+      else if (bellen && !gsm) melding = 'Vul je gsm-nummer in als je gebeld wil worden.';
+      if (melding) { if (fout) { fout.textContent = melding; fout.style.display = 'block'; } return; }
+      if (fout) fout.style.display = 'none';
+
+      const ontvangers = [];
+      if (wilLeercoach) ontvangers.push('ltc@groeipunt.be');
+      if (wilVz) ontvangers.push('vz@groeipunt.be');
+
+      const lijnen = [
+        'Contactaanvraag zorg via het leerpad "Regie over eigen leren".', '',
+        'Naam: ' + naam,
+        'Campus: ' + campus,
+        'Wenst contact met: ' + [wilLeercoach ? 'leercoach (brede basiszorg)' : null, wilVz ? 'verhoogde zorg' : null].filter(Boolean).join(' + '),
+        'Manier van contact: ' + hoe.join(', '),
+        'Mailadres: ' + mail,
+        'Gsm: ' + (gsm || '-'), '',
+        'Bericht:', (opmerking || '-')
+      ];
+      const onderwerp = 'Contactaanvraag zorg — ' + naam;
+      const mailto = 'mailto:' + ontvangers.join(',') + '?subject=' + encodeURIComponent(onderwerp) + '&body=' + encodeURIComponent(lijnen.join('\n'));
+
+      const d = ensureDeel4State();
+      d.zorg = { verzonden:true, overgeslagen:false, ontvangers, naam, campus, mail, gsm, hoe, opmerking, tijdstip:new Date().toISOString() };
+      saveState();
+
+      // Open de mailclient (mailto) — server-side auto-versturen vereist een backend; zie nota.
+      const a = document.createElement('a');
+      a.href = mailto; a.target = '_blank'; a.rel = 'noopener';
+      document.body.appendChild(a); a.click(); a.remove();
+
+      toonZorgBevestiging(true);
+      vierEindeLeerpad();
+    }
+    function slaZorgOver() {
+      const d = ensureDeel4State();
+      d.zorg = { verzonden:false, overgeslagen:true, tijdstip:new Date().toISOString() };
+      saveState();
+      toonZorgBevestiging(false);
+      vierEindeLeerpad();
+    }
+    function toonZorgBevestiging(verzonden) {
+      const form = document.getElementById('zorg-form-card');
+      const bev = document.getElementById('zorg-bevestiging');
+      if (form) form.style.display = 'none';
+      if (bev) {
+        bev.style.display = 'block';
+        bev.innerHTML = verzonden
+          ? '<i class="bi bi-check-circle-fill me-2" style="color:var(--groeipunt);"></i>Bedankt, je bericht is verzonden. Een zorgmedewerker neemt zo snel mogelijk contact met je op.'
+          : '<i class="bi bi-check-circle-fill me-2" style="color:var(--groeipunt);"></i>Geen probleem, je kan dit later altijd nog doen.';
+      }
+    }
+
+    // ----- 4.4 Volledige POP-PDF -----
+    async function genereerDeel4PDF() {
+      const statusEl = document.getElementById('pdf-deel4-status');
+      if (statusEl) statusEl.innerHTML = '<div class="text-muted small"><i class="bi bi-hourglass-split me-1"></i>PDF wordt gegenereerd…</div>';
+      try {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ unit:'mm', format:'a4' });
+        let y = pdfHoofdtitel(doc, 0, 'Deel 4 — Jouw POP');
+        y = pdfCursistGegevens(doc, y);
+        const d = ensureDeel4State();
+
+        y = pdfSectionHeader(doc, '4.1  Wie ben jij?', y);
+        y = pdfVraagAntwoord(doc, 'Naam', d.identiteit.naam, y);
+        y = pdfVraagAntwoord(doc, 'Leeftijd', d.identiteit.leeftijd, y);
+        y = pdfVraagAntwoord(doc, 'Opleiding AAV', d.identiteit.aav, y);
+        if (d.identiteit.beroep) y = pdfVraagAntwoord(doc, 'Beroepsgerichte opleiding', d.identiteit.beroep, y);
+
+        y = pdfSectionHeader(doc, '4.2  Onder de ijsberg — jouw binnenste', y);
+        y = pdfVraagAntwoord(doc, 'Mijn motivatie voor deze opleiding', d.onder.motivatie, y);
+        y = pdfVraagAntwoord(doc, 'Wat geeft mij energie bij het studeren', d.onder.energie, y);
+        y = pdfVraagAntwoord(doc, 'Mijn interesses', d.onder.interesses, y);
+        y = pdfVraagAntwoord(doc, 'Mijn talenten', d.onder.talenten, y);
+        y = pdfVraagAntwoord(doc, 'Hoe ik naar mezelf kijk als lerende', d.onder.zelfbeeld, y);
+        y = pdfVraagAntwoord(doc, 'Drempels die ik voor mezelf zie', d.onder.drempels, y);
+
+        y = pdfSectionHeader(doc, '4.3  Boven de ijsberg — jouw plan', y);
+        y = pdfVraagAntwoord(doc, 'Mijn gekozen strategie', d.boven.strategie, y);
+        y = pdfVraagAntwoord(doc, 'Hoe ik die concreet maakte', d.boven.concreet, y);
+        y = pdfVraagAntwoord(doc, 'Hulpbronnen die ik gebruik', d.boven.hulpbronnen, y);
+        y = pdfVraagAntwoord(doc, 'Hoe ik mijn strategie opvolg', d.boven.opvolgen, y);
+        y = pdfVraagAntwoord(doc, 'Hoe ik evalueer of ze werkt', d.boven.evalueren, y);
+
+        pdfFooters(doc);
+        const c = appState.cursist || {};
+        const bestand = `Deel4_POP_${(c.achternaam||'cursist').replace(/\s+/g,'')}_${(c.voornaam||'').replace(/\s+/g,'')}.pdf`;
+        downloadPDF(doc, bestand, 'pdf-deel4-status');
+      } catch (err) {
+        console.error(err);
+        if (statusEl) statusEl.innerHTML = '<div class="alert alert-danger py-2 mb-0"><i class="bi bi-x-circle-fill me-2"></i>Er ging iets mis bij de PDF-generatie. Probeer opnieuw.</div>';
+      }
+    }
+
+    // ----- Eindanimatie: vliegende mascotte + regenboogstaart + confetti -----
+    function vierEindeLeerpad() {
+      const stijl = (appState.cursist && appState.cursist.balkStijl) || 'standaard';
+      const bericht = document.getElementById('eind-bericht-statisch');
+      const tekst = 'Proficiat! Je bent nu volledig klaar met het leerpad “Regie over eigen leren”.';
+      if (bericht) { bericht.textContent = tekst; bericht.style.display = 'block'; }
+
+      if (stijl === 'standaard') return; // droog geleverd
+
+      const emoji = STIJL_MASCOTTES[stijl] || '🎉';
+      const overlay = document.createElement('div');
+      overlay.id = 'eind-overlay';
+      overlay.innerHTML = `
+        <canvas id="eind-confetti"></canvas>
+        <div id="eind-figuur">${emoji}</div>
+        <div id="eind-popup"><div class="eind-popup-inner"><i class="bi bi-trophy-fill mb-2" style="font-size:2.4rem;color:var(--groeipunt);"></i><div>${tekst}</div></div></div>`;
+      document.body.appendChild(overlay);
+      requestAnimationFrame(() => startEindAnimatie());
+    }
+
+    function startEindAnimatie() {
+      const overlay = document.getElementById('eind-overlay');
+      const fig = document.getElementById('eind-figuur');
+      const canvas = document.getElementById('eind-confetti');
+      const popup = document.getElementById('eind-popup');
+      if (!overlay || !fig || !canvas) return;
+      const W = overlay.clientWidth, H = overlay.clientHeight;
+      canvas.width = W; canvas.height = H;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      const trail = [];
+      const confetti = [];
+      const kleuren = ['#e63946','#f4a261','#e9c46a','#2a9d8f','#457b9d','#9b5de5','#ff70a6'];
+      let start = null;
+      const duur = 3200;
+      let confettiGestart = false, popupGetoond = false;
+
+      function spawnConfetti(n) {
+        for (let i = 0; i < n; i++) {
+          confetti.push({
+            x: Math.random() * W, y: -20 - Math.random() * 60,
+            vx: (Math.random() - 0.5) * 1.5, vy: 2 + Math.random() * 3,
+            s: 5 + Math.random() * 7, rot: Math.random() * 6.28, vr: (Math.random() - 0.5) * 0.3,
+            kl: kleuren[(Math.random() * kleuren.length) | 0]
+          });
+        }
+      }
+
+      function frame(ts) {
+        if (!start) start = ts;
+        const t = ts - start;
+        const p = Math.min(t / duur, 1);
+        const ease = 1 - Math.pow(1 - p, 2);
+        // Diagonale baan van linksonder naar rechtsboven
+        const x = -0.1 * W + ease * 1.2 * W;
+        const y = 1.1 * H - ease * 1.2 * H;
+        fig.style.left = x + 'px';
+        fig.style.top = y + 'px';
+
+        // Regenboogstaart die breder wordt naarmate de figuur verder vliegt
+        trail.push({ x: x + 30, y: y + 30, born: t, baseR: 6 + p * 30, hue: (t * 0.5) % 360 });
+        if (trail.length > 120) trail.shift();
+
+        ctx.clearRect(0, 0, W, H);
+        for (const d of trail) {
+          const age = (t - d.born) / 700;
+          if (age >= 1) continue;
+          ctx.globalAlpha = (1 - age) * 0.8;
+          ctx.fillStyle = `hsl(${d.hue}, 90%, 60%)`;
+          ctx.beginPath();
+          ctx.arc(d.x, d.y, d.baseR * (1 - age * 0.3), 0, 6.2832);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+
+        if (p >= 0.45 && !confettiGestart) { confettiGestart = true; spawnConfetti(90); }
+        if (p >= 0.45 && !popupGetoond && popup) { popupGetoond = true; popup.classList.add('toon'); }
+        if (confettiGestart && t < duur + 1200 && Math.random() < 0.3) spawnConfetti(6);
+
+        for (const c of confetti) {
+          c.x += c.vx; c.y += c.vy; c.rot += c.vr; c.vy += 0.02;
+          ctx.save(); ctx.translate(c.x, c.y); ctx.rotate(c.rot);
+          ctx.fillStyle = c.kl; ctx.fillRect(-c.s / 2, -c.s / 2, c.s, c.s * 0.6);
+          ctx.restore();
+        }
+
+        if (t < 5200) requestAnimationFrame(frame);
+        else {
+          // Laat de popup nog even staan, ruim de animatie op
+          fig.style.display = 'none';
+          let fade = 1;
+          const uit = setInterval(() => {
+            fade -= 0.05; canvas.style.opacity = fade;
+            if (fade <= 0) { clearInterval(uit); if (overlay && overlay.parentNode) overlay.remove(); }
+          }, 40);
+        }
+      }
+      requestAnimationFrame(frame);
     }
 
     const PDF_KLEUR = [0, 154, 155];           // var(--groeipunt) als RGB
