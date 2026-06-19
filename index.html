@@ -397,6 +397,11 @@
     #eind-popup.toon { opacity:1; transform:translate(-50%,-50%) scale(1); }
     #eind-popup .eind-popup-inner { background:#fff; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.22); padding:1.6rem 1.4rem; text-align:center; font-weight:600; }
 
+    /* Ondertiteling-hulp bij filmpjes (vaste conventie) */
+    .ondertitel-tip { background:#e7f5f5; border:1px solid #b9dede; border-radius:.5rem; padding:.5rem .75rem; transition:background-color .15s; }
+    .ondertitel-tip:hover { background:#d8eeee; }
+    .ondertitel-tip .cc-badge { background:var(--groeipunt); color:#fff; font-size:.7rem; font-weight:600; padding:.15rem .4rem; border-radius:.25rem; flex:none; }
+
     /* ====== Uitbreidingsoefening ====== */
     .uitbreiding-banner {
       background: linear-gradient(135deg, #6f42c1 0%, #9b5de5 100%);
@@ -760,34 +765,8 @@
                 wat je interesses zijn en welke talenten je al hebt. Samen vormen die je <strong>persoonlijke kompas</strong>.
               </p>
 
-              <p class="mt-4 mb-2">Dit deel bestaat uit <strong>4 onderdelen</strong>. Klik op een onderdeel om er meteen naartoe te gaan (of start vanaf het begin).</p>
-              <div class="list-group mb-3">
-                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel1-motivatie-theorie')">
-                  <span class="badge rounded-pill me-3" style="background-color:var(--groeipunt);">1</span>
-                  <span class="flex-grow-1"><strong>Motivatie</strong> <span class="text-muted small">— wat drijft jou?</span></span>
-                  <i class="bi bi-chevron-right text-muted"></i>
-                </button>
-                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel1-energie-theorie')">
-                  <span class="badge rounded-pill me-3" style="background-color:var(--groeipunt);">2</span>
-                  <span class="flex-grow-1"><strong>Energie</strong> <span class="text-muted small">— wat geeft of kost energie?</span></span>
-                  <i class="bi bi-chevron-right text-muted"></i>
-                </button>
-                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel1-interesses-theorie')">
-                  <span class="badge rounded-pill me-3" style="background-color:var(--groeipunt);">3</span>
-                  <span class="flex-grow-1"><strong>Interesses</strong> <span class="text-muted small">— waar ben je nieuwsgierig naar?</span></span>
-                  <i class="bi bi-chevron-right text-muted"></i>
-                </button>
-                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel1-talenten-theorie')">
-                  <span class="badge rounded-pill me-3" style="background-color:var(--groeipunt);">4</span>
-                  <span class="flex-grow-1"><strong>Talenten</strong> <span class="text-muted small">— wat kan je van nature goed?</span></span>
-                  <i class="bi bi-chevron-right text-muted"></i>
-                </button>
-                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel1-afsluiting')" style="background-color:#f8f9fa;">
-                  <span class="badge rounded-pill me-3 bg-success"><i class="bi bi-file-earmark-pdf"></i></span>
-                  <span class="flex-grow-1"><strong>Afronding</strong> <span class="text-muted small">— PDF van Deel 1 genereren</span></span>
-                  <i class="bi bi-chevron-right text-muted"></i>
-                </button>
-              </div>
+              <p class="mt-4 mb-2">Dit deel bestaat uit <strong>4 onderdelen</strong>. Werk ze één voor één af — elk onderdeel opent zodra het vorige een groen vinkje heeft.</p>
+              <div class="list-group mb-3" id="sectiemenu-deel1"></div>
               <p class="text-muted small">
                 Elk onderdeel start met een korte theorie en eindigt met enkele verwerkingsoefeningen.
                 Op het einde van Deel 1 stel je een korte samenvatting samen die je als PDF kan downloaden.
@@ -852,6 +831,11 @@
                       <i class="bi bi-box-arrow-up-right me-1"></i>Werkt het filmpje niet? Bekijk op YouTube
                     </a>
                   </div>
+                  <a href="https://dubble.so/guides/ondertiteling-in-youtube-i3kxuxs8i06xebzluah9" target="_blank" rel="noopener" class="ondertitel-tip d-flex align-items-center gap-2 text-decoration-none mt-2">
+                    <span class="cc-badge">CC</span>
+                    <span class="flex-grow-1 small" style="color:#0f6e6f;"><strong>Liever met ondertiteling?</strong> Bekijk hier hoe je die aanzet op YouTube.</span>
+                    <i class="bi bi-chevron-right" style="color:var(--groeipunt);"></i>
+                  </a>
                 </div>
                 <div class="col-md-5 d-flex flex-column gap-3">
                   <div class="card flex-fill" style="border: 2px solid var(--groeipunt);">
@@ -2569,6 +2553,12 @@
                         allowfullscreen></iframe>
               </div>
 
+              <a href="https://dubble.so/guides/ondertiteling-in-youtube-i3kxuxs8i06xebzluah9" target="_blank" rel="noopener" class="ondertitel-tip d-flex align-items-center gap-2 text-decoration-none mb-3">
+                <span class="cc-badge">CC</span>
+                <span class="flex-grow-1 small" style="color:#0f6e6f;"><strong>Liever met ondertiteling?</strong> Bekijk hier hoe je die aanzet op YouTube.</span>
+                <i class="bi bi-chevron-right" style="color:var(--groeipunt);"></i>
+              </a>
+
               <h2 class="h6 mb-2">Zes soorten talenten</h2>
               <div class="row g-2">
                 <div class="col-md-6">
@@ -3098,29 +3088,8 @@
                 Zo weet je beter wat jou soms tegenhoudt — en dat is de eerste stap om er iets aan te doen.
               </p>
 
-              <p class="mt-4 mb-2">Dit deel bestaat uit <strong>3 onderdelen</strong>. Klik op een onderdeel om er meteen naartoe te gaan (of start vanaf het begin).</p>
-              <div class="list-group mb-3">
-                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel2-drempels-theorie')">
-                  <span class="badge rounded-pill me-3" style="background-color:var(--groeipunt);">1</span>
-                  <span class="flex-grow-1"><strong>Wat is een drempel?</strong> <span class="text-muted small">— wat maakt leren moeilijker?</span></span>
-                  <i class="bi bi-chevron-right text-muted"></i>
-                </button>
-                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel2-modellen-theorie')">
-                  <span class="badge rounded-pill me-3 bg-secondary">2</span>
-                  <span class="flex-grow-1"><strong>Waarom zijn er drempels?</strong> <span class="text-muted small">— drie modellen</span> <span class="badge bg-light text-secondary border ms-1">uitbreiding</span></span>
-                  <i class="bi bi-chevron-right text-muted"></i>
-                </button>
-                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel2-zelfbeeld-theorie')">
-                  <span class="badge rounded-pill me-3" style="background-color:var(--groeipunt);">3</span>
-                  <span class="flex-grow-1"><strong>Zelfbeeld &amp; referentiekader</strong> <span class="text-muted small">— hoe kijk je naar jezelf?</span></span>
-                  <i class="bi bi-chevron-right text-muted"></i>
-                </button>
-                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel2-afsluiting')" style="background-color:#f8f9fa;">
-                  <span class="badge rounded-pill me-3 bg-success"><i class="bi bi-file-earmark-pdf"></i></span>
-                  <span class="flex-grow-1"><strong>Afronding</strong> <span class="text-muted small">— PDF van Deel 2 genereren</span></span>
-                  <i class="bi bi-chevron-right text-muted"></i>
-                </button>
-              </div>
+              <p class="mt-4 mb-2">Dit deel bestaat uit <strong>3 onderdelen</strong>. Werk ze één voor één af — elk onderdeel opent zodra het vorige een groen vinkje heeft.</p>
+              <div class="list-group mb-3" id="sectiemenu-deel2"></div>
               <p class="text-muted small">
                 Het tweede onderdeel is een <strong>uitbreiding</strong>: je mag het overslaan als je wil.
                 Op het einde van Deel 2 stel je een korte samenvatting samen die je als PDF kan downloaden.
@@ -3786,29 +3755,8 @@
                 Je kiest strategieën die bij jou passen en werkt er één helemaal uit.
               </p>
 
-              <p class="mt-4 mb-2">Dit deel bestaat uit <strong>3 onderdelen</strong>. Klik op een onderdeel om er meteen naartoe te gaan (of start vanaf het begin).</p>
-              <div class="list-group mb-3">
-                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel3-strategie-theorie')">
-                  <span class="badge rounded-pill me-3" style="background-color:var(--groeipunt);">1</span>
-                  <span class="flex-grow-1"><strong>Wat is een helpende strategie?</strong> <span class="text-muted small">— wat maakt een strategie goed?</span></span>
-                  <i class="bi bi-chevron-right text-muted"></i>
-                </button>
-                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel3-drempels-strategie')">
-                  <span class="badge rounded-pill me-3" style="background-color:var(--groeipunt);">2</span>
-                  <span class="flex-grow-1"><strong>Strategieën per drempel</strong> <span class="text-muted small">— kies strategieën voor jouw drempels</span></span>
-                  <i class="bi bi-chevron-right text-muted"></i>
-                </button>
-                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel3-uitwerken-kiezen')">
-                  <span class="badge rounded-pill me-3" style="background-color:var(--groeipunt);">3</span>
-                  <span class="flex-grow-1"><strong>Werk jouw strategie uit</strong> <span class="text-muted small">— in 5 stappen</span></span>
-                  <i class="bi bi-chevron-right text-muted"></i>
-                </button>
-                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel3-afsluiting')" style="background-color:#f8f9fa;">
-                  <span class="badge rounded-pill me-3 bg-success"><i class="bi bi-file-earmark-pdf"></i></span>
-                  <span class="flex-grow-1"><strong>Afronding</strong> <span class="text-muted small">— PDF van Deel 3 genereren</span></span>
-                  <i class="bi bi-chevron-right text-muted"></i>
-                </button>
-              </div>
+              <p class="mt-4 mb-2">Dit deel bestaat uit <strong>3 onderdelen</strong>. Werk ze één voor één af — elk onderdeel opent zodra het vorige een groen vinkje heeft.</p>
+              <div class="list-group mb-3" id="sectiemenu-deel3"></div>
 
               <div class="d-flex justify-content-between mt-4">
                 <button class="btn btn-outline-secondary" onclick="goToPage('page-overzicht')">
@@ -4247,29 +4195,8 @@
               <h1 class="h2 mb-3">Deel 4 — Jouw POP</h1>
               <p class="lead">Jouw <strong>Persoonlijk OntwikkelingsPlan (POP)</strong> brengt alles samen. Je dacht na over je motivatie, je interesses en energie, je talenten, je drempels en je strategie. Nu schrijf je dat samen in één plan dat je kunt bijhouden en bespreken met je leertrajectcoach.</p>
 
-              <p class="mt-4 mb-2">Dit deel bestaat uit <strong>3 onderdelen</strong> en een afronding.</p>
-              <div class="list-group mb-3">
-                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel4-identiteit')">
-                  <span class="badge rounded-pill me-3" style="background-color:var(--groeipunt);">1</span>
-                  <span class="flex-grow-1"><strong>Wie ben jij?</strong> <span class="text-muted small">— jouw identiteitskaart</span></span>
-                  <i class="bi bi-chevron-right text-muted"></i>
-                </button>
-                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel4-ijsberg-onder')">
-                  <span class="badge rounded-pill me-3" style="background-color:var(--groeipunt);">2</span>
-                  <span class="flex-grow-1"><strong>Onder de ijsberg</strong> <span class="text-muted small">— jouw binnenste</span></span>
-                  <i class="bi bi-chevron-right text-muted"></i>
-                </button>
-                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel4-ijsberg-boven')">
-                  <span class="badge rounded-pill me-3" style="background-color:var(--groeipunt);">3</span>
-                  <span class="flex-grow-1"><strong>Boven de ijsberg</strong> <span class="text-muted small">— jouw plan</span></span>
-                  <i class="bi bi-chevron-right text-muted"></i>
-                </button>
-                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="goToPage('page-deel4-afsluiting')" style="background-color:#f8f9fa;">
-                  <span class="badge rounded-pill me-3 bg-success"><i class="bi bi-file-earmark-pdf"></i></span>
-                  <span class="flex-grow-1"><strong>Afronding</strong> <span class="text-muted small">— PDF van je POP genereren</span></span>
-                  <i class="bi bi-chevron-right text-muted"></i>
-                </button>
-              </div>
+              <p class="mt-4 mb-2">Dit deel bestaat uit <strong>3 onderdelen</strong> en een afronding. Werk ze één voor één af — elk onderdeel opent zodra het vorige een groen vinkje heeft.</p>
+              <div class="list-group mb-3" id="sectiemenu-deel4"></div>
 
               <div class="d-flex justify-content-between mt-4">
                 <button class="btn btn-outline-secondary" onclick="goToPage('page-overzicht')"><i class="bi bi-grid me-2"></i>Alle delen</button>
@@ -5237,6 +5164,11 @@
       if (pageId === 'page-deel4-afsluiting') {
         setTimeout(() => initZorgformulier(), 50);
       }
+      // Sectiemenu's per deel: vinkjes + sequentiële ontgrendeling
+      if (pageId === 'page-deel1-intro') setTimeout(() => renderSectiemenu(1), 30);
+      if (pageId === 'page-deel2-intro') setTimeout(() => renderSectiemenu(2), 30);
+      if (pageId === 'page-deel3-intro') setTimeout(() => renderSectiemenu(3), 30);
+      if (pageId === 'page-deel4-intro') setTimeout(() => renderSectiemenu(4), 30);
     }
 
     // =================================================================
@@ -9816,6 +9748,100 @@
         }
       }
       requestAnimationFrame(frame);
+    }
+
+    // =================================================================
+    //  SECTIEMENU PER DEEL — vinkjes + sequentiële ontgrendeling
+    // =================================================================
+    const DEEL_ONDERDELEN = {
+      1: [
+        { label:'Motivatie', sub:'wat drijft jou?', start:'page-deel1-motivatie-theorie' },
+        { label:'Energie', sub:'wat geeft of kost energie?', start:'page-deel1-energie-theorie' },
+        { label:'Interesses', sub:'waar ben je nieuwsgierig naar?', start:'page-deel1-interesses-theorie' },
+        { label:'Talenten', sub:'wat kan je van nature goed?', start:'page-deel1-talenten-theorie' },
+        { label:'Afronding', sub:'PDF van Deel 1 genereren', start:'page-deel1-afsluiting', afronding:true }
+      ],
+      2: [
+        { label:'Wat is een drempel?', sub:'wat maakt leren moeilijker?', start:'page-deel2-drempels-theorie' },
+        { label:'Waarom zijn er drempels?', sub:'drie modellen', start:'page-deel2-modellen-theorie', tag:'uitbreiding' },
+        { label:'Zelfbeeld &amp; referentiekader', sub:'hoe kijk je naar jezelf?', start:'page-deel2-zelfbeeld-theorie' },
+        { label:'Afronding', sub:'PDF van Deel 2 genereren', start:'page-deel2-afsluiting', afronding:true }
+      ],
+      3: [
+        { label:'Wat is een helpende strategie?', sub:'wat maakt een strategie goed?', start:'page-deel3-strategie-theorie' },
+        { label:'Strategieën per drempel', sub:'kies strategieën voor jouw drempels', start:'page-deel3-drempels-strategie' },
+        { label:'Werk jouw strategie uit', sub:'in 5 stappen', start:'page-deel3-uitwerken-kiezen' },
+        { label:'Afronding', sub:'PDF van Deel 3 genereren', start:'page-deel3-afsluiting', afronding:true }
+      ],
+      4: [
+        { label:'Wie ben jij?', sub:'jouw identiteitskaart', start:'page-deel4-identiteit' },
+        { label:'Onder de ijsberg', sub:'jouw binnenste', start:'page-deel4-ijsberg-onder' },
+        { label:'Boven de ijsberg', sub:'jouw plan', start:'page-deel4-ijsberg-boven' },
+        { label:'Afronding', sub:'PDF van je POP genereren', start:'page-deel4-afsluiting', afronding:true }
+      ]
+    };
+
+    function deelMaxIndex(deel) {
+      const v = appState.voortgang && appState.voortgang[deel];
+      return v && typeof v.maxIndex === 'number' ? v.maxIndex : -1;
+    }
+    function deelAfgerond(deel) {
+      const v = appState.voortgang && appState.voortgang[deel];
+      return !!(v && v.afgerond);
+    }
+    function idxInDeel(deel, pageId) {
+      const arr = DEEL_PAGINAS[deel] || [];
+      return arr.indexOf(pageId);
+    }
+    // Een onderdeel is "klaar" zodra de cursist voorbij het laatste onderdeel-deel
+    // is geraakt (maxIndex bereikt de start van het volgende onderdeel). De
+    // pagina-gating garandeert dat dit pas kan na het afwerken van dit onderdeel.
+    function onderdeelKlaar(deel, i) {
+      const lijst = DEEL_ONDERDELEN[deel];
+      const o = lijst[i];
+      if (o.afronding) return deelAfgerond(deel);
+      const volgende = lijst[i + 1];
+      if (!volgende) return deelAfgerond(deel);
+      const doel = idxInDeel(deel, volgende.start);
+      return doel >= 0 && deelMaxIndex(deel) >= doel;
+    }
+    function onderdeelOntgrendeld(deel, i) {
+      return i === 0 || onderdeelKlaar(deel, i - 1);
+    }
+
+    // Bouwt het sectiemenu van een deel met vinkjes en vergrendeling
+    function renderSectiemenu(deel) {
+      const cont = document.getElementById('sectiemenu-deel' + deel);
+      if (!cont) return;
+      const lijst = DEEL_ONDERDELEN[deel] || [];
+      cont.innerHTML = lijst.map((o, i) => {
+        const klaar = onderdeelKlaar(deel, i);
+        const open = onderdeelOntgrendeld(deel, i);
+        const tag = o.tag ? ` <span class="badge bg-light text-secondary border ms-1">${o.tag}</span>` : '';
+        let badge, onclick, chevron, cls = '';
+        if (klaar) {
+          badge = '<span class="badge rounded-pill me-3 bg-success"><i class="bi bi-check-lg"></i></span>';
+          onclick = `goToPage('${o.start}')`;
+          chevron = '<i class="bi bi-chevron-right text-muted"></i>';
+        } else if (open) {
+          badge = o.afronding
+            ? '<span class="badge rounded-pill me-3 bg-success"><i class="bi bi-file-earmark-pdf"></i></span>'
+            : `<span class="badge rounded-pill me-3" style="background-color:var(--groeipunt);">${i + 1}</span>`;
+          onclick = `goToPage('${o.start}')`;
+          chevron = '<i class="bi bi-chevron-right text-muted"></i>';
+        } else {
+          badge = '<span class="badge rounded-pill me-3 bg-secondary"><i class="bi bi-lock-fill"></i></span>';
+          onclick = `toonInfoModal('<i class=&quot;bi bi-lock-fill me-2&quot;></i>Nog vergrendeld', '<p class=&quot;mb-0&quot;>Rond eerst het vorige onderdeel af. Zodra dat een groen vinkje heeft, kun je hier verder.</p>')`;
+          chevron = '<i class="bi bi-lock text-muted"></i>';
+          cls = ' opacity-50';
+        }
+        const achtergrond = o.afronding ? ' style="background-color:#f8f9fa;"' : '';
+        return `<button type="button" class="list-group-item list-group-item-action d-flex align-items-center${cls}"${achtergrond} onclick="${onclick}">
+                  ${badge}
+                  <span class="flex-grow-1"><strong>${o.label}</strong> <span class="text-muted small">— ${o.sub}</span>${tag}</span>
+                  ${chevron}
+                </button>`;
+      }).join('');
     }
 
     const PDF_KLEUR = [0, 154, 155];           // var(--groeipunt) als RGB
