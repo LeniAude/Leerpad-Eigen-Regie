@@ -74,6 +74,20 @@
     }
     #mascot-container.hidden { display: none; }
 
+    /* Zwevende hulpknop (linksonder, weg van de mascottes rechts) */
+    #hulp-knop {
+      position: fixed; bottom: 20px; left: 20px; z-index: 1040;
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--groeipunt); color: #fff; border: none;
+      box-shadow: 0 3px 10px rgba(0,0,0,.22);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.7rem; line-height: 1; cursor: pointer; transition: background-color .15s, transform .1s;
+    }
+    #hulp-knop:hover { background: #007677; }
+    #hulp-knop:active { transform: scale(.95); }
+    .hulp-bron { transition: background-color .15s; }
+    .hulp-bron:hover { background-color: #f6fbfb; }
+
     .mascot-img {
       width: auto;
       height: 140px;
@@ -582,6 +596,10 @@
       #mascot-container {
         bottom: calc(84px + env(safe-area-inset-bottom, 0px));
       }
+      /* Hulpknop mee omhoog, vrij van de Moodle-onderbalk */
+      #hulp-knop {
+        bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+      }
     }
   </style>
 </head>
@@ -722,6 +740,16 @@
             <i class="bi bi-unlock-fill fs-5 me-2" style="color:var(--groeipunt);"></i>
             <div class="small mb-0">
               <strong>Deel 3</strong> ontgrendelt zodra je <strong>Deel 1 én Deel 2</strong> hebt afgerond. <strong>Deel 4</strong> komt vrij na Deel 3. Een deel is afgerond zodra je de afsluitpagina ervan bereikt.
+            </div>
+          </div>
+
+          <div class="alert border-0 py-3 mb-4" style="background-color:#fff7e6;">
+            <div class="d-flex align-items-start">
+              <i class="bi bi-clock-history fs-5 me-2" style="color:#b8860b;"></i>
+              <div class="small mb-0">
+                <strong>Hoeveel tijd kost dit?</strong> Reken op ongeveer <strong>6 à 10 uur</strong> effectief werk, verspreid over meerdere momenten. In <strong>Deel 3</strong> test je je strategie eerst een <strong>drietal weken</strong> in het echte leven uit vóór je ze evalueert — over de hele rit ben je dus al snel <strong>enkele weken</strong> bezig.<br>
+                Je hoeft het leerpad niet in één keer af te werken: je voortgang wordt bewaard, dus je kunt het rustig <strong>in stukjes</strong> doen. Werk wel best <strong>deel per deel</strong>: rond een deel af voor je aan het volgende begint.
+              </div>
             </div>
           </div>
 
@@ -4275,6 +4303,11 @@
             <img src="https://leniaude.github.io/Leerpad-Eigen-Regie/images/iceberg.jpg" alt="IJsberg: het zichtbare deel boven water en het grote deel eronder" class="ijsberg-fig rounded shadow-sm" onerror="this.style.display='none'">
           </div>
           <p class="small text-muted">Dit zijn de dingen die je niet meteen ziet, maar die jou als lerende vormen. Vul de vragen in en laat je inspireren door de oefeningen uit dit leerpad. Je POP is een handleiding voor jou én je leerkrachten om samen je doel te bereiken. Onder elke vraag vind je een goed en een minder goed voorbeeld.</p>
+
+          <div class="alert border-0 d-flex align-items-start py-2 mb-3" style="background-color:#e7f5f5;">
+            <i class="bi bi-lightbulb-fill me-2 mt-1" style="color:var(--groeipunt);"></i>
+            <div class="small mb-0">Tip: pak de <strong>PDF's die je per deel maakte</strong> er nog eens bij. Daarin staan je antwoorden uit Deel 1, 2 en 3 netjes samen — zo vind je snel terug wat je eerder noteerde over je motivatie, talenten, drempels en strategie.</div>
+          </div>
 
           <div class="card border-0 shadow-sm">
             <div class="card-body p-4">
@@ -9580,12 +9613,19 @@
       d.zorg = { verzonden:true, overgeslagen:false, ontvangers, naam, campus, mail, gsm, hoe, opmerking, tijdstip:new Date().toISOString() };
       saveState();
 
-      // Open de mailclient (mailto) — server-side auto-versturen vereist een backend; zie nota.
-      const a = document.createElement('a');
-      a.href = mailto; a.target = '_blank'; a.rel = 'noopener';
-      document.body.appendChild(a); a.click(); a.remove();
+      // Gmail-opstelvenster automatisch openen. Dit is een gewone webpagina, dus een
+      // nieuw tabblad mag hier wél (geen about:blank zoals bij een mailto zonder handler).
+      const gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1'
+        + '&to=' + encodeURIComponent(ontvangers.join(','))
+        + '&su=' + encodeURIComponent(onderwerp)
+        + '&body=' + encodeURIComponent(lijnen.join('\n'));
+      try {
+        const a = document.createElement('a');
+        a.href = gmailUrl; a.target = '_blank'; a.rel = 'noopener';
+        document.body.appendChild(a); a.click(); a.remove();
+      } catch (e) { /* automatisch openen lukte niet; de knoppen in de bevestiging blijven beschikbaar */ }
 
-      toonZorgBevestiging(true);
+      toonZorgBevestiging(true, gmailUrl, mailto, ontvangers);
       vierEindeLeerpad();
     }
     function slaZorgOver() {
@@ -9595,15 +9635,26 @@
       toonZorgBevestiging(false);
       vierEindeLeerpad();
     }
-    function toonZorgBevestiging(verzonden) {
+    function toonZorgBevestiging(verzonden, gmailUrl, mailto, ontvangers) {
       const form = document.getElementById('zorg-form-card');
       const bev = document.getElementById('zorg-bevestiging');
       if (form) form.style.display = 'none';
-      if (bev) {
-        bev.style.display = 'block';
-        bev.innerHTML = verzonden
-          ? '<i class="bi bi-check-circle-fill me-2" style="color:var(--groeipunt);"></i>Bedankt, je bericht is verzonden. Een zorgmedewerker neemt zo snel mogelijk contact met je op.'
-          : '<i class="bi bi-check-circle-fill me-2" style="color:var(--groeipunt);"></i>Geen probleem, je kan dit later altijd nog doen.';
+      if (!bev) return;
+      bev.style.display = 'block';
+      if (verzonden) {
+        const adres = (ontvangers || []).join(', ');
+        bev.innerHTML =
+          '<div class="d-flex align-items-start"><i class="bi bi-check-circle-fill me-2 mt-1" style="color:var(--groeipunt);"></i>' +
+          '<div><strong>Je aanvraag staat klaar.</strong> Gmail zou nu in een nieuw tabblad moeten openen met je bericht erin. ' +
+          'Klik daar op verzenden om het af te ronden — een zorgmedewerker neemt dan zo snel mogelijk contact met je op.' +
+          '<div class="mt-2 d-flex flex-wrap gap-2">' +
+          (gmailUrl ? '<a href="' + gmailUrl + '" target="_blank" rel="noopener" class="btn btn-success btn-sm"><i class="bi bi-envelope me-1"></i>Open in Gmail</a>' : '') +
+          (mailto ? '<a href="' + mailto + '" class="btn btn-outline-secondary btn-sm"><i class="bi bi-envelope-at me-1"></i>Of je eigen mailprogramma</a>' : '') +
+          '</div>' +
+          (adres ? '<div class="small text-muted mt-2">Opent er niets? Mail dan rechtstreeks naar <strong>' + adres + '</strong>.</div>' : '') +
+          '</div></div>';
+      } else {
+        bev.innerHTML = '<i class="bi bi-check-circle-fill me-2" style="color:var(--groeipunt);"></i>Geen probleem, je kan dit later altijd nog doen.';
       }
     }
 
@@ -9842,6 +9893,12 @@
                   ${chevron}
                 </button>`;
       }).join('');
+    }
+
+    // Zwevende hulpknop → open het hulppaneel
+    function openHulp() {
+      const el = document.getElementById('hulp-modal');
+      if (el) new bootstrap.Modal(el).show();
     }
 
     const PDF_KLEUR = [0, 154, 155];           // var(--groeipunt) als RGB
@@ -10532,5 +10589,79 @@
       const o = document.getElementById('overzicht-naam'); if (o) o.textContent = naam;
     }
   </script>
+  <!-- ============================================================ -->
+  <!-- ZWEVENDE HULPKNOP + HULPPANEEL (globaal, op elke pagina)     -->
+  <!-- ============================================================ -->
+  <button type="button" id="hulp-knop" onclick="openHulp()" aria-label="Hulp nodig?" title="Hulp nodig?">
+    <i class="bi bi-question-lg"></i>
+  </button>
+
+  <div class="modal fade" id="hulp-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header text-white" style="background-color:var(--groeipunt);">
+          <h5 class="modal-title mb-0"><i class="bi bi-life-preserver me-2"></i>Hulp nodig?</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Sluiten"></button>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted small">Loop je ergens vast? Hieronder vind je antwoorden op veelgestelde vragen, en manieren om persoonlijke hulp te krijgen.</p>
+
+          <h6 class="text-uppercase small fw-bold text-muted mt-3 mb-2">Veelgestelde vragen</h6>
+          <div class="accordion accordion-flush border rounded overflow-hidden" id="hulp-faq">
+            <div class="accordion-item">
+              <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#hulp-faq-1">Mijn antwoorden zijn verdwenen / ik moet opnieuw beginnen.</button></h2>
+              <div id="hulp-faq-1" class="accordion-collapse collapse" data-bs-parent="#hulp-faq"><div class="accordion-body small text-muted">Het leerpad bewaart je antwoorden in déze browser op dít toestel. Werk je op een ander toestel of in een andere browser, of wis je je browsergegevens, dan begin je opnieuw. Werk dus best altijd op hetzelfde toestel en in dezelfde browser.</div></div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#hulp-faq-2">De knop "Volgende" blijft grijs / ik kan niet verder.</button></h2>
+              <div id="hulp-faq-2" class="accordion-collapse collapse" data-bs-parent="#hulp-faq"><div class="accordion-body small text-muted">Vul eerst alle gevraagde velden of oefeningen op die pagina in. Onder de knop staat telkens wat er nog ontbreekt; zodra alles ingevuld is, kleurt de knop aan en kun je verder.</div></div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#hulp-faq-3">Een onderdeel heeft een slotje.</button></h2>
+              <div id="hulp-faq-3" class="accordion-collapse collapse" data-bs-parent="#hulp-faq"><div class="accordion-body small text-muted">Onderdelen openen één voor één: rond eerst het vorige onderdeel af (groen vinkje), dan opent het volgende. Deel 3 opent zodra Deel 1 én Deel 2 klaar zijn; Deel 4 opent na Deel 3.</div></div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#hulp-faq-4">Het filmpje speelt niet af.</button></h2>
+              <div id="hulp-faq-4" class="accordion-collapse collapse" data-bs-parent="#hulp-faq"><div class="accordion-body small text-muted">Open het filmpje via de link onder de video op YouTube. Ondertiteling aanzetten kan via het turquoise tip-balkje onder elke video.</div></div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#hulp-faq-5">Hoe lever ik mijn werk in op Moodle?</button></h2>
+              <div id="hulp-faq-5" class="accordion-collapse collapse" data-bs-parent="#hulp-faq"><div class="accordion-body small text-muted">Gebruik de groene knop "Upload op Moodle" op de afsluitpagina van elk deel. Daar staat ook een handleiding-link als het uploaden niet lukt.</div></div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#hulp-faq-6">Mijn PDF wordt niet gemaakt of gedownload.</button></h2>
+              <div id="hulp-faq-6" class="accordion-collapse collapse" data-bs-parent="#hulp-faq"><div class="accordion-body small text-muted">Klik nog eens op de PDF-knop en kijk of je browser downloads of pop-ups blokkeert. Lukt het niet, probeer dan een andere browser (bijvoorbeeld Google Chrome).</div></div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#hulp-faq-7">Kan ik later verder werken?</button></h2>
+              <div id="hulp-faq-7" class="accordion-collapse collapse" data-bs-parent="#hulp-faq"><div class="accordion-body small text-muted">Ja. Je voortgang wordt bewaard op dit toestel en in deze browser. Je kunt gerust later terugkomen en verdergaan waar je gebleven was.</div></div>
+            </div>
+          </div>
+
+          <h6 class="text-uppercase small fw-bold text-muted mt-4 mb-2">Liever persoonlijke hulp?</h6>
+
+          <a href="https://www.groeipunt.be/info/open-leercentrum" target="_blank" rel="noopener" class="hulp-bron d-flex gap-3 align-items-start text-decoration-none border rounded p-3 mb-2">
+            <i class="bi bi-building" style="font-size:1.4rem;color:var(--groeipunt);"></i>
+            <span class="flex-grow-1"><span class="fw-semibold text-dark d-block">Open Leercentrum</span><span class="small text-muted">Kom langs — iemand helpt je daar verder.</span></span>
+            <i class="bi bi-box-arrow-up-right text-muted"></i>
+          </a>
+
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ltc@groeipunt.be&su=Hulpvraag%20leerpad%20Regie%20over%20eigen%20leren" target="_blank" rel="noopener" class="hulp-bron d-flex gap-3 align-items-start text-decoration-none border rounded p-3 mb-1">
+            <i class="bi bi-envelope" style="font-size:1.4rem;color:var(--groeipunt);"></i>
+            <span class="flex-grow-1"><span class="fw-semibold text-dark d-block">Mail je leertrajectcoach</span><span class="small font-monospace text-muted">ltc@groeipunt.be</span></span>
+            <i class="bi bi-box-arrow-up-right text-muted"></i>
+          </a>
+          <div class="small text-muted mb-2" style="padding-left:2.6rem;">Liever je eigen mailprogramma? <a href="mailto:ltc@groeipunt.be?subject=Hulpvraag%20leerpad%20Regie%20over%20eigen%20leren">Stuur een gewone e-mail</a>.</div>
+
+          <a href="https://moodle.groeipunt.be/course/view.php?id=11737" target="_blank" rel="noopener" class="hulp-bron d-flex gap-3 align-items-start text-decoration-none border rounded p-3 mb-0">
+            <i class="bi bi-heart-pulse" style="font-size:1.4rem;color:var(--groeipunt);"></i>
+            <span class="flex-grow-1"><span class="fw-semibold text-dark d-block">Zorgaanbod</span><span class="small text-muted">Bekijk welke ondersteuning er voor jou is.</span></span>
+            <i class="bi bi-box-arrow-up-right text-muted"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
