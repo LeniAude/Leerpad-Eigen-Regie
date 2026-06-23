@@ -88,6 +88,17 @@
     .hulp-bron { transition: background-color .15s; }
     .hulp-bron:hover { background-color: #f6fbfb; }
 
+    /* Rondleiding (spotlight-tour) */
+    #rl-overlay { position: fixed; inset: 0; z-index: 3000; display: none; }
+    #rl-dim { position: absolute; inset: 0; background: rgba(0,0,0,.55); z-index: 1; display: none; }
+    #rl-hl { position: absolute; z-index: 1; border: 3px solid var(--groeipunt); border-radius: 14px;
+      box-shadow: 0 0 0 9999px rgba(0,0,0,.55); transition: all .25s ease; display: none; }
+    #rl-card { position: absolute; z-index: 2; width: 340px; max-width: calc(100vw - 24px);
+      max-height: calc(100vh - 24px); overflow: auto; background: #fff; border-radius: 14px;
+      box-shadow: 0 12px 44px rgba(0,0,0,.35); padding: 18px; }
+    .rl-dot { width: 7px; height: 7px; border-radius: 50%; background: #ced4da; }
+    .rl-dot.actief { background: var(--groeipunt); }
+
     .mascot-img {
       width: auto;
       height: 140px;
@@ -730,7 +741,7 @@
               <p class="text-muted mb-1">Hallo <span id="overzicht-naam" class="fw-bold"></span>,</p>
               <h1 class="h2 mb-0">Jouw leerpad</h1>
             </div>
-            <button type="button" class="btn btn-link btn-sm p-0 text-muted" style="text-decoration:none;" onclick="openBalkStijlModal()" title="Wijzig de stijl van je voortgangsbalk">
+            <button type="button" id="overzicht-palette-knop" class="btn btn-link btn-sm p-0 text-muted" style="text-decoration:none;" onclick="openBalkStijlModal()" title="Wijzig de stijl van je voortgangsbalk">
               <i class="bi bi-palette-fill fs-5"></i>
             </button>
           </div>
@@ -9901,6 +9912,175 @@
       if (el) new bootstrap.Modal(el).show();
     }
 
+    // =================================================================
+    //  RONDLEIDING (spotlight-tour)
+    // =================================================================
+    const RL_STAPPEN = [
+      { sel:null, icon:'bi-signpost-2-fill', titel:'Welkom — even kort hoe het werkt',
+        tekst:'Deze korte rondleiding toont je de belangrijkste dingen. Je kunt ze altijd overslaan, en later opnieuw bekijken via de hulpknop linksonder.' },
+      { sel:'#overzicht-kaarten', icon:'bi-grid-1x2-fill', titel:'Vier delen, jouw tempo',
+        tekst:'Het leerpad heeft vier delen. Deel 1 en Deel 2 mag je in eender welke volgorde doen. Deel 3 opent pas zodra Deel 1 én 2 klaar zijn; Deel 4 komt daarna.' },
+      { sel:null, icon:'bi-check2-circle', titel:'Stap voor stap verder',
+        tekst:'Binnen een deel werk je de onderdelen één voor één af. Je kunt pas naar de volgende pagina als je oefening juist of volledig ingevuld is. Onder de knop "Volgende" staat telkens wat er nog ontbreekt.' },
+      { sel:null, icon:'bi-hdd-fill', titel:'Je antwoorden blijven op dit toestel',
+        tekst:'Alles wat je invult, wordt enkel bewaard in de browser van dít toestel. Werk dus telkens op hetzelfde toestel en dezelfde browser, en wis je browsergegevens niet — anders begin je opnieuw.' },
+      { sel:null, icon:'bi-file-earmark-pdf-fill', titel:'Een PDF per deel',
+        tekst:'Op het einde van elk deel maak je een PDF. Upload die op Moodle, én bewaar ze zelf in een mapje op je pc. Zo vind je je werk later makkelijk terug en gaat er niets verloren.' },
+      { sel:'#hulp-knop', icon:'bi-life-preserver', titel:'Hulp altijd bij de hand',
+        tekst:'Loop je vast? Met deze knop (linksonder) open je veelgestelde vragen en wie je kan contacteren: het Open Leercentrum, je leertrajectcoach en het zorgaanbod. Klik op "Open de hulp" om even rond te kijken.',
+        actie:'help' },
+      { sel:'#overzicht-palette-knop', icon:'bi-palette-fill', titel:'Je eigen voortgangsbalk',
+        tekst:'Met dit knopje kies je een symbool dat met je meeloopt op de voortgangsbalk — een eenhoorn, heks of raket. Puur voor het plezier!' },
+      { sel:null, icon:'bi-emoji-smile-fill', titel:'Klaar! Veel succes',
+        tekst:'Dat was het. Je kunt deze rondleiding later opnieuw bekijken via de hulpknop. Kies nu rustig waar je wil starten — Deel 1 of Deel 2.' },
+    ];
+    let rlIdx = 0, rlActief = false;
+
+    function startRondleiding() {
+      RL_STAPPEN.forEach(s => { if (s.actie === 'help') s._geopend = false; });
+      rlIdx = 0; rlActief = true;
+      appState.cursist.rondleidingGezien = true; saveState();
+      document.getElementById('rl-overlay').style.display = 'block';
+      renderRlStap();
+    }
+
+    function endRondleiding() {
+      rlActief = false;
+      document.getElementById('rl-overlay').style.display = 'none';
+      const b = document.getElementById('rl-hulp-verder');
+      if (b && b.parentNode) b.parentNode.removeChild(b);
+      appState.cursist.rondleidingGezien = true; saveState();
+    }
+
+    function rlNext() {
+      const s = RL_STAPPEN[rlIdx];
+      if (s.actie === 'help' && !s._geopend) { s._geopend = true; rlOpenHulp(); return; }
+      if (rlIdx < RL_STAPPEN.length - 1) { rlIdx++; renderRlStap(); }
+      else endRondleiding();
+    }
+    function rlPrev() { if (rlIdx > 0) { rlIdx--; renderRlStap(); } }
+
+    function renderRlStap() {
+      const s = RL_STAPPEN[rlIdx];
+      document.getElementById('rl-icon').className = 'bi ' + s.icon;
+      document.getElementById('rl-title').textContent = s.titel;
+      document.getElementById('rl-text').textContent = s.tekst;
+      document.getElementById('rl-prev').style.visibility = rlIdx === 0 ? 'hidden' : 'visible';
+      const next = document.getElementById('rl-next');
+      if (s.actie === 'help' && !s._geopend) next.textContent = 'Open de hulp';
+      else if (rlIdx === RL_STAPPEN.length - 1) next.textContent = 'Klaar';
+      else next.textContent = 'Volgende';
+      document.getElementById('rl-dots').innerHTML =
+        RL_STAPPEN.map((_, k) => '<span class="rl-dot ' + (k === rlIdx ? 'actief' : '') + '"></span>').join('');
+
+      const dim = document.getElementById('rl-dim');
+      const hl = document.getElementById('rl-hl');
+      const el = s.sel ? document.querySelector(s.sel) : null;
+      if (!el) {
+        hl.style.display = 'none'; dim.style.display = 'block';
+        positionRlCard(null);
+      } else {
+        if (el.scrollIntoView) el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        setTimeout(() => {
+          const r = el.getBoundingClientRect(), pad = 8;
+          dim.style.display = 'none'; hl.style.display = 'block';
+          hl.style.left = (r.left - pad) + 'px'; hl.style.top = (r.top - pad) + 'px';
+          hl.style.width = (r.width + pad * 2) + 'px'; hl.style.height = (r.height + pad * 2) + 'px';
+          positionRlCard(r);
+        }, 80);
+      }
+    }
+
+    // Plaatst het kaartje; op kleine schermen vast onderaan zodat "Volgende" altijd bereikbaar is
+    function positionRlCard(rect) {
+      const card = document.getElementById('rl-card');
+      const vw = window.innerWidth, vh = window.innerHeight;
+      if (vw < 576) {
+        card.style.left = '12px'; card.style.right = '12px'; card.style.width = 'auto';
+        card.style.top = ''; card.style.bottom = 'calc(16px + env(safe-area-inset-bottom, 0px))';
+        card.style.maxHeight = '72vh';
+        return;
+      }
+      const cw = Math.min(340, vw - 24);
+      card.style.width = cw + 'px'; card.style.right = ''; card.style.bottom = '';
+      card.style.maxHeight = 'calc(100vh - 24px)';
+      const ch = card.offsetHeight;
+      if (!rect) {
+        card.style.left = Math.round((vw - cw) / 2) + 'px';
+        card.style.top = Math.max(12, Math.round((vh - ch) / 2)) + 'px';
+        return;
+      }
+      let left = rect.left + rect.width / 2 - cw / 2;
+      left = Math.min(Math.max(left, 12), vw - cw - 12);
+      card.style.left = Math.round(left) + 'px';
+      let top;
+      if (rect.bottom + 12 + ch <= vh - 12) top = rect.bottom + 12;
+      else if (rect.top - 12 - ch >= 12) top = rect.top - 12 - ch;
+      else top = Math.max(12, vh - ch - 12);
+      card.style.top = Math.round(top) + 'px';
+    }
+
+    // Hulpknop-stap: open het echte hulppaneel, scroll volledig naar onder, ga daarna verder
+    function rlOpenHulp() {
+      document.getElementById('rl-overlay').style.display = 'none';
+      const modalEl = document.getElementById('hulp-modal');
+      injectRlVerderInHulp();
+      modalEl.addEventListener('shown.bs.modal', rlScrollHulp, { once: true });
+      modalEl.addEventListener('hidden.bs.modal', rlNaHulp, { once: true });
+      bootstrap.Modal.getOrCreateInstance(modalEl).show();
+    }
+    function injectRlVerderInHulp() {
+      const body = document.querySelector('#hulp-modal .modal-body');
+      if (!body || document.getElementById('rl-hulp-verder')) return;
+      const wrap = document.createElement('div');
+      wrap.id = 'rl-hulp-verder';
+      wrap.className = 'text-center mt-4 pt-3 border-top';
+      wrap.innerHTML = '<p class="small text-muted mb-2">Dit is alles wat je in de hulp terugvindt.</p>' +
+        '<button type="button" class="btn btn-groeipunt btn-sm" onclick="sluitHulpEnVerder()">Verder met de rondleiding <i class="bi bi-arrow-right ms-1"></i></button>';
+      body.appendChild(wrap);
+    }
+    function sluitHulpEnVerder() {
+      bootstrap.Modal.getOrCreateInstance(document.getElementById('hulp-modal')).hide();
+    }
+    function rlScrollHulp() {
+      const body = document.querySelector('#hulp-modal .modal-body');
+      if (!body) return;
+      const start = body.scrollTop, end = body.scrollHeight - body.clientHeight;
+      if (end <= start) return;
+      const dur = 2600, t0 = performance.now();
+      function stap(t) {
+        const p = Math.min((t - t0) / dur, 1);
+        const eased = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+        body.scrollTop = start + (end - start) * eased;
+        if (p < 1) requestAnimationFrame(stap);
+      }
+      requestAnimationFrame(stap);
+    }
+    function rlNaHulp() {
+      const b = document.getElementById('rl-hulp-verder');
+      if (b && b.parentNode) b.parentNode.removeChild(b);
+      if (!rlActief) return;
+      document.getElementById('rl-overlay').style.display = 'block';
+      if (rlIdx < RL_STAPPEN.length - 1) { rlIdx++; renderRlStap(); }
+      else endRondleiding();
+    }
+
+    // Herbekijken via het hulppaneel
+    function herbekijkRondleiding() {
+      const modalEl = document.getElementById('hulp-modal');
+      const inst = bootstrap.Modal.getInstance(modalEl);
+      if (inst) {
+        modalEl.addEventListener('hidden.bs.modal', () => { goToPage('page-overzicht'); setTimeout(startRondleiding, 350); }, { once: true });
+        inst.hide();
+      } else {
+        goToPage('page-overzicht'); setTimeout(startRondleiding, 350);
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      if (rlActief && document.getElementById('rl-overlay').style.display === 'block') renderRlStap();
+    });
+
     const PDF_KLEUR = [0, 154, 155];           // var(--groeipunt) als RGB
     const PDF_KLEUR_DARK = [0, 118, 119];
     const PDF_GRIJS_LICHT = [230, 245, 245];
@@ -10524,10 +10704,14 @@
       vulWelkomstNamen();
       goToPage('page-overzicht');
 
-      // Welkomstbericht via mascotte
-      setTimeout(() => {
-        showMascot(`Hallo ${appState.cursist.voornaam}! Fijn dat je erbij bent. Kies hieronder met welk deel je wil starten — Deel 1 of Deel 2.`);
-      }, 600);
+      // Eerste keer: rondleiding starten. Anders: welkomstbericht via mascotte.
+      if (!appState.cursist.rondleidingGezien) {
+        setTimeout(() => startRondleiding(), 500);
+      } else {
+        setTimeout(() => {
+          showMascot(`Hallo ${appState.cursist.voornaam}! Fijn dat je erbij bent. Kies hieronder met welk deel je wil starten — Deel 1 of Deel 2.`);
+        }, 600);
+      }
     });
 
     // =================================================================
@@ -10658,6 +10842,33 @@
             <span class="flex-grow-1"><span class="fw-semibold text-dark d-block">Zorgaanbod</span><span class="small text-muted">Bekijk welke ondersteuning er voor jou is.</span></span>
             <i class="bi bi-box-arrow-up-right text-muted"></i>
           </a>
+
+          <hr class="my-3">
+          <div class="text-center">
+            <button type="button" class="btn btn-link btn-sm text-muted text-decoration-none" onclick="herbekijkRondleiding()"><i class="bi bi-signpost-2 me-1"></i>Bekijk de rondleiding opnieuw</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================ -->
+  <!-- RONDLEIDING (spotlight-tour, globaal)                        -->
+  <!-- ============================================================ -->
+  <div id="rl-overlay">
+    <div id="rl-dim"></div>
+    <div id="rl-hl"></div>
+    <div id="rl-card">
+      <div class="d-flex align-items-center gap-2 mb-2">
+        <i id="rl-icon" class="bi bi-signpost-2-fill" style="color:var(--groeipunt); font-size:1.3rem;"></i>
+        <span id="rl-title" class="fw-bold"></span>
+      </div>
+      <div id="rl-text" class="small text-muted" style="line-height:1.6;"></div>
+      <div class="d-flex align-items-center justify-content-between mt-3">
+        <button class="btn btn-link btn-sm text-muted p-0 text-decoration-none" onclick="endRondleiding()">Overslaan</button>
+        <div id="rl-dots" class="d-flex gap-1"></div>
+        <div class="d-flex gap-2">
+          <button id="rl-prev" class="btn btn-outline-secondary btn-sm" onclick="rlPrev()"><i class="bi bi-arrow-left"></i></button>
+          <button id="rl-next" class="btn btn-groeipunt btn-sm" onclick="rlNext()">Volgende</button>
         </div>
       </div>
     </div>
