@@ -406,6 +406,8 @@
     .paspoort-rij label { font-size:.72rem; letter-spacing:.05em; text-transform:uppercase; color:#6c757d; }
     .paspoort-rij input { border:none; border-bottom:1.5px solid #cfe4e4; border-radius:0; padding:.15rem .1rem; font-weight:600; background:transparent; }
     .paspoort-rij input:focus { outline:none; border-bottom-color:var(--groeipunt); box-shadow:none; }
+    .paspoort-rij select { border:none; border-bottom:1.5px solid #cfe4e4; border-radius:0; padding:.15rem .1rem; font-weight:600; background:transparent; }
+    .paspoort-rij select:focus { outline:none; border-bottom-color:var(--groeipunt); box-shadow:none; }
 
     .ijsberg-fig { max-width:320px; width:100%; }
     .pop-voorbeeld summary { cursor:pointer; color:var(--groeipunt); font-size:.85rem; list-style:none; }
@@ -4275,7 +4277,7 @@
               <div class="flex-grow-1">
                 <div class="paspoort-rij"><label for="d4-id-naam">Naam</label><input id="d4-id-naam" type="text" oninput="onIdentiteitInput()"></div>
                 <div class="paspoort-rij"><label for="d4-id-leeftijd">Leeftijd</label><input id="d4-id-leeftijd" type="text" oninput="onIdentiteitInput()"></div>
-                <div class="paspoort-rij"><label for="d4-id-aav">Opleiding AAV</label><input id="d4-id-aav" type="text" oninput="onIdentiteitInput()"></div>
+                <div class="paspoort-rij"><label for="d4-id-aav">Opleiding AAV</label><select id="d4-id-aav" onchange="onIdentiteitInput()"><option value="" disabled selected>Kies…</option><option value="100% afstandsonderwijs (@home)">100% afstandsonderwijs (@home)</option><option value="100% contactonderwijs op campus">100% contactonderwijs op campus</option><option value="Zowel @home als op campus">Zowel @home als op campus</option></select></div>
                 <div class="paspoort-rij mb-0"><label for="d4-id-beroep">Beroepsgerichte opleiding <span class="text-muted" style="text-transform:none;">(indien van toepassing)</span></label><input id="d4-id-beroep" type="text" oninput="onIdentiteitInput()"></div>
               </div>
             </div>
@@ -4482,8 +4484,8 @@
 
               <div class="mt-3">
                 <div class="small fw-semibold mb-1">Ik wens contact met:</div>
-                <div class="form-check"><input class="form-check-input" type="checkbox" id="zorg-met-leercoach"><label class="form-check-label small" for="zorg-met-leercoach">Leercoach (brede basiszorg)</label></div>
-                <div class="form-check"><input class="form-check-input" type="checkbox" id="zorg-met-vz"><label class="form-check-label small" for="zorg-met-vz">Verhoogde zorg</label></div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" id="zorg-met-leercoach"><label class="form-check-label small" for="zorg-met-leercoach">Leercoach (brede basiszorg)</label><button type="button" class="btn btn-link p-0 ms-1 align-baseline text-muted" style="line-height:1;" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="top" data-bs-title="Leercoach" data-bs-content="Je leercoach kan je helpen zoeken naar manieren om je leerproces vlotter te laten verlopen, bijvoorbeeld door te kijken naar hoe je kan plannen, hoe je kan leren en hoe je op Moodle kan werken."><i class="bi bi-info-circle"></i></button></div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" id="zorg-met-vz"><label class="form-check-label small" for="zorg-met-vz">Verhoogde zorg</label><button type="button" class="btn btn-link p-0 ms-1 align-baseline text-muted" style="line-height:1;" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="top" data-bs-title="Verhoogde zorg" data-bs-content="Een verhoogde-zorgmedewerker ondersteunt cursisten die het moeilijk hebben tijdens hun opleiding. Je kan er terecht met problemen zoals spanningen, stress, concentratieproblemen of faalangst. Samen zoek je naar oplossingen zodat studeren beter haalbaar wordt. Je kan met hen ook in gesprek gaan over maatregelen die het voor jou haalbaar maken om de lessen te volgen (bv. niet aangeduid worden om online een vraag te beantwoorden, een vaste plek in het lokaal als je fysiek les volgt, hulpmiddelen bij dyslexie…)."><i class="bi bi-info-circle"></i></button></div>
               </div>
 
               <div class="mt-3">
@@ -9909,7 +9911,21 @@
     // Zwevende hulpknop → open het hulppaneel
     function openHulp() {
       const el = document.getElementById('hulp-modal');
-      if (el) new bootstrap.Modal(el).show();
+      if (!el) return;
+      // Mail-links vooraf invullen met de campus (die info hebben we nodig) en de naam
+      const c = appState.cursist || {};
+      const naam = ((c.voornaam || '') + ' ' + (c.achternaam || '')).trim();
+      const su = 'Hulpvraag leerpad Regie over eigen leren';
+      const body = 'Naam: ' + (naam || '(vul je naam in)')
+                 + '\nCampus: ' + (c.campus || '(vul je campus in)')
+                 + '\n\nMijn vraag:\n';
+      const gm = document.getElementById('hulp-mail-gmail');
+      const mt = document.getElementById('hulp-mail-mailto');
+      if (gm) gm.href = 'https://mail.google.com/mail/?view=cm&fs=1&to=ltc@groeipunt.be&su='
+                 + encodeURIComponent(su) + '&body=' + encodeURIComponent(body);
+      if (mt) mt.href = 'mailto:ltc@groeipunt.be?subject='
+                 + encodeURIComponent(su) + '&body=' + encodeURIComponent(body);
+      new bootstrap.Modal(el).show();
     }
 
     // =================================================================
@@ -10830,12 +10846,12 @@
             <i class="bi bi-box-arrow-up-right text-muted"></i>
           </a>
 
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ltc@groeipunt.be&su=Hulpvraag%20leerpad%20Regie%20over%20eigen%20leren" target="_blank" rel="noopener" class="hulp-bron d-flex gap-3 align-items-start text-decoration-none border rounded p-3 mb-1">
+          <a id="hulp-mail-gmail" href="https://mail.google.com/mail/?view=cm&fs=1&to=ltc@groeipunt.be&su=Hulpvraag%20leerpad%20Regie%20over%20eigen%20leren" target="_blank" rel="noopener" class="hulp-bron d-flex gap-3 align-items-start text-decoration-none border rounded p-3 mb-1">
             <i class="bi bi-envelope" style="font-size:1.4rem;color:var(--groeipunt);"></i>
             <span class="flex-grow-1"><span class="fw-semibold text-dark d-block">Mail je leertrajectcoach</span><span class="small font-monospace text-muted">ltc@groeipunt.be</span></span>
             <i class="bi bi-box-arrow-up-right text-muted"></i>
           </a>
-          <div class="small text-muted mb-2" style="padding-left:2.6rem;">Liever je eigen mailprogramma? <a href="mailto:ltc@groeipunt.be?subject=Hulpvraag%20leerpad%20Regie%20over%20eigen%20leren">Stuur een gewone e-mail</a>.</div>
+          <div class="small text-muted mb-2" style="padding-left:2.6rem;">Liever je eigen mailprogramma? <a id="hulp-mail-mailto" href="mailto:ltc@groeipunt.be?subject=Hulpvraag%20leerpad%20Regie%20over%20eigen%20leren">Stuur een gewone e-mail</a>.</div>
 
           <a href="https://moodle.groeipunt.be/course/view.php?id=11737" target="_blank" rel="noopener" class="hulp-bron d-flex gap-3 align-items-start text-decoration-none border rounded p-3 mb-0">
             <i class="bi bi-heart-pulse" style="font-size:1.4rem;color:var(--groeipunt);"></i>
